@@ -1,7 +1,7 @@
 
 # BOUTIQUE EN LIGNE 
 
-## 1. RÉSUMÉ DES RÔLES UTILISATEURS
+## 1. RÉSUMÉ DES RÔLES UTILISATEURS ==> done ce point
 
 | Rôle                   | Authentification           | 
 | ---------------------- | -------------------------- |
