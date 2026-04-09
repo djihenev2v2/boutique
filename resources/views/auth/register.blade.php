@@ -4,11 +4,11 @@
 
 @section('content')
 <div>
-    <h1 class="text-[26px] font-bold text-navy-900 tracking-tight">Créer un compte</h1>
-    <p class="text-slate-400 text-sm mt-1 mb-8">Inscrivez-vous pour passer vos commandes</p>
+    <h1 class="text-[28px] font-bold text-[#18396e] tracking-tight leading-tight">Créer votre compte</h1>
+    <p class="text-slate-400 text-[13.5px] mt-1.5 mb-7">Rejoignez notre espace marchand en quelques secondes</p>
 
     @if ($errors->any())
-    <div class="mb-6 bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg">
+    <div class="mb-5 bg-red-50 border border-red-200 text-red-600 text-[13px] px-4 py-3 rounded-xl">
         <ul class="space-y-1">
             @foreach ($errors->all() as $error)
             <li class="flex items-start gap-2">
@@ -26,84 +26,68 @@
         @csrf
 
         <div class="mb-4">
-            <label for="name" class="block text-[13px] font-medium text-slate-600 mb-1.5">Nom complet</label>
+            <label for="name" class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Nom complet</label>
             <input
-                type="text"
-                id="name"
-                name="name"
-                value="{{ old('name') }}"
-                required
-                autofocus
-                autocomplete="name"
-                class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors @error('name') border-red-400 bg-red-50 @enderror"
+                type="text" id="name" name="name"
+                value="{{ old('name') }}" required autofocus autocomplete="name"
+                class="w-full px-3.5 py-[11px] border {{ $errors->has('name') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
                 placeholder="Votre nom complet"
             >
         </div>
 
         <div class="mb-4">
-            <label for="email" class="block text-[13px] font-medium text-slate-600 mb-1.5">Adresse email</label>
+            <label for="email" class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Adresse Email</label>
             <input
-                type="email"
-                id="email"
-                name="email"
-                value="{{ old('email') }}"
-                required
-                autocomplete="email"
-                class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors @error('email') border-red-400 bg-red-50 @enderror"
-                placeholder="exemple@email.com"
+                type="email" id="email" name="email"
+                value="{{ old('email') }}" required autocomplete="email"
+                class="w-full px-3.5 py-[11px] border {{ $errors->has('email') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                placeholder="nom@entreprise.com"
             >
         </div>
 
         <div class="mb-4">
-            <label for="phone" class="block text-[13px] font-medium text-slate-600 mb-1.5">Téléphone</label>
+            <label for="phone" class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Téléphone</label>
             <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value="{{ old('phone') }}"
-                required
-                autocomplete="tel"
-                class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors @error('phone') border-red-400 bg-red-50 @enderror"
+                type="tel" id="phone" name="phone"
+                value="{{ old('phone') }}" required autocomplete="tel"
+                class="w-full px-3.5 py-[11px] border {{ $errors->has('phone') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
                 placeholder="05 XX XX XX XX"
             >
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div class="grid grid-cols-2 gap-3 mb-6">
             <div>
-                <label for="password" class="block text-[13px] font-medium text-slate-600 mb-1.5">Mot de passe</label>
+                <label for="password" class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Mot de Passe</label>
                 <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                    autocomplete="new-password"
-                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors @error('password') border-red-400 bg-red-50 @enderror"
-                    placeholder="Min. 8 caractères"
+                    type="password" id="password" name="password"
+                    required autocomplete="new-password"
+                    class="w-full px-3.5 py-[11px] border {{ $errors->has('password') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                    placeholder="Min. 8 car."
                 >
             </div>
             <div>
-                <label for="password_confirmation" class="block text-[13px] font-medium text-slate-600 mb-1.5">Confirmation</label>
+                <label for="password_confirmation" class="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Confirmation</label>
                 <input
-                    type="password"
-                    id="password_confirmation"
-                    name="password_confirmation"
-                    required
-                    autocomplete="new-password"
-                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-navy-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:bg-white transition-colors"
-                    placeholder="Retapez le mot de passe"
+                    type="password" id="password_confirmation" name="password_confirmation"
+                    required autocomplete="new-password"
+                    class="w-full px-3.5 py-[11px] border bg-slate-50 border-slate-200 rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                    placeholder="Confirmez"
                 >
             </div>
         </div>
 
-        <button type="submit" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-semibold py-2.5 px-4 rounded-lg text-sm transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        <button type="submit" class="w-full py-3 flex items-center justify-center gap-2 bg-[#18396e] hover:bg-b-900 text-white font-semibold text-[14px] rounded-full transition-colors duration-150 cursor-pointer">
             Créer mon compte
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+            </svg>
         </button>
     </form>
 
-    <div class="mt-8 text-center">
-        <p class="text-sm text-slate-400">
+    <div class="mt-7 pt-6 border-t border-slate-100 text-center">
+        <p class="text-[13px] text-slate-400">
             Déjà inscrit ?
-            <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-medium transition-colors">Se connecter</a>
+            <a href="{{ route('login') }}" class="font-semibold text-[#18396e] hover:text-[#1e4a8a] transition-colors">Se connecter</a>
         </p>
     </div>
 </div>
