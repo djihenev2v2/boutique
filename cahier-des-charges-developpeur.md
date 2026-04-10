@@ -11,14 +11,14 @@
 
 ## 2. COMMERÇANT (ADMIN) — PAGES & FONCTIONNALITÉS
 
-### Layout global admin
+### Layout global admin ==> done 
 
 - **Sidebar gauche** : Menu de navigation permanent
 - **Header top** : Nom du commerçant, bouton déconnexion, lien vers le site public
 - **Zone contenu** : Contenu de la page active
 - **Responsive** : Sur mobile, la sidebar devient un menu hamburger
 
-#### Éléments du menu sidebar :
+#### Éléments du menu sidebar :==> done
 
 1. Dashboard
 2. Commandes
@@ -31,7 +31,7 @@
 
 ---
 
-### 2.1 PAGE : Connexion Admin
+### 2.1 PAGE : Connexion Admin ==> done
 
 **Description** : Page de connexion du commerçant.
 
@@ -142,7 +142,7 @@
 
 ---
 
-### 2.4 PAGE : Créer / Modifier un Produit
+Créer / Modifier un Produit
 
 **Description** : Formulaire complet de création ou modification d'un produit avec gestion des variantes.
 

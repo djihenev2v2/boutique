@@ -30,7 +30,7 @@
             <input
                 type="text" id="name" name="name"
                 value="{{ old('name') }}" required autofocus autocomplete="name"
-                class="w-full px-3.5 py-[11px] border {{ $errors->has('name') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                class="w-full px-3.5 py-[11px] border {{ $errors->has('name') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-colors duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white"
                 placeholder="Votre nom complet"
             >
         </div>
@@ -40,7 +40,7 @@
             <input
                 type="email" id="email" name="email"
                 value="{{ old('email') }}" required autocomplete="email"
-                class="w-full px-3.5 py-[11px] border {{ $errors->has('email') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                class="w-full px-3.5 py-[11px] border {{ $errors->has('email') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-colors duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white"
                 placeholder="nom@entreprise.com"
             >
         </div>
@@ -50,7 +50,7 @@
             <input
                 type="tel" id="phone" name="phone"
                 value="{{ old('phone') }}" required autocomplete="tel"
-                class="w-full px-3.5 py-[11px] border {{ $errors->has('phone') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                class="w-full px-3.5 py-[11px] border {{ $errors->has('phone') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-colors duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white"
                 placeholder="05 XX XX XX XX"
             >
         </div>
@@ -61,7 +61,7 @@
                 <input
                     type="password" id="password" name="password"
                     required autocomplete="new-password"
-                    class="w-full px-3.5 py-[11px] border {{ $errors->has('password') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                    class="w-full px-3.5 py-[11px] border {{ $errors->has('password') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-colors duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white"
                     placeholder="Min. 8 car."
                 >
             </div>
@@ -70,7 +70,7 @@
                 <input
                     type="password" id="password_confirmation" name="password_confirmation"
                     required autocomplete="new-password"
-                    class="w-full px-3.5 py-[11px] border bg-slate-50 border-slate-200 rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                    class="w-full px-3.5 py-[11px] border bg-slate-50 border-slate-200 rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-colors duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white"
                     placeholder="Confirmez"
                 >
             </div>

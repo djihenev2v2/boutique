@@ -6,28 +6,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Connexion') — {{ config('app.name', 'Boutique') }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{{ asset('js/tailwind.config.js') }}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        b: {
-                            900: '#0f2445',
-                            800: '#18396e',
-                            700: '#1e4a8a',
-                            600: '#2a5fa8',
-                            100: '#e8f0fb',
-                            50:  '#f0f5ff',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="{{ asset('css/boutique.css') }}">
     @livewireStyles
 </head>
 <body class="min-h-screen font-sans antialiased bg-[#18396e]">
@@ -93,6 +76,7 @@
         </div>
     </div>
 
+    @stack('scripts')
     @livewireScripts
 </body>
 </html>

@@ -32,7 +32,7 @@
                     type="email" id="email" name="email"
                     value="{{ old('email') }}"
                     required autofocus autocomplete="email"
-                    class="w-full pl-10 pr-3.5 py-[11px] border {{ $errors->has('email') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                    class="w-full pl-10 pr-3.5 py-[11px] border {{ $errors->has('email') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-colors duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white"
                     placeholder="nom@entreprise.com"
                 >
             </div>
@@ -53,7 +53,7 @@
                 <input
                     type="password" id="password" name="password"
                     required autocomplete="current-password"
-                    class="w-full pl-10 pr-10 py-[11px] border {{ $errors->has('password') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-all duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white focus:ring-2 focus:ring-[#18396e]/[0.08]"
+                    class="w-full pl-10 pr-10 py-[11px] border {{ $errors->has('password') ? 'bg-red-50 border-red-400' : 'bg-slate-50 border-slate-200' }} rounded-[10px] text-[13.5px] text-[#18396e] placeholder:text-slate-400 transition-colors duration-150 focus:outline-none focus:border-[#18396e] focus:bg-white"
                     placeholder="••••••••"
                 >
                 <button type="button" onclick="togglePwd()" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#18396e] transition-colors">
@@ -91,15 +91,12 @@
     <div class="mt-7 pt-6 border-t border-slate-100 text-center">
         <p class="text-[13px] text-slate-400 mb-3">Pas encore de compte marchand ?</p>
         <a href="{{ route('register') }}" class="inline-block px-6 py-2.5 rounded-full border border-slate-300 text-[13px] font-medium text-[#18396e] hover:border-[#18396e]/50 hover:bg-b-50 transition-colors">
-            Demander l'accès
+            S'inscrire
         </a>
     </div>
 </div>
 
-<script>
-function togglePwd() {
-    const input = document.getElementById('password');
-    input.type = input.type === 'password' ? 'text' : 'password';
-}
-</script>
+@push('scripts')
+<script src="{{ asset('js/auth.js') }}"></script>
+@endpush
 @endsection

@@ -1,0 +1,8 @@
+/* Override autofill browser styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #f8fafc inset !important;
+    -webkit-text-fill-color: #18396e !important;
+    transition: background-color 9999s ease-in-out 0s;
+}
