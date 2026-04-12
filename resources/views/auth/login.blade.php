@@ -97,6 +97,6 @@
 </div>
 
 @push('scripts')
-<script src="{{ asset('js/auth.js') }}"></script>
+<script type="module" src="{{ asset('js/auth.js') }}"></script>
 @endpush
 @endsection

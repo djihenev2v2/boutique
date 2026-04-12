@@ -1,11 +1,11 @@
-function toggleSidebar() {
-    var s = document.getElementById('sidebar');
-    var o = document.getElementById('sidebarOverlay');
-    if (s.classList.contains('-translate-x-full')) {
-        s.classList.remove('-translate-x-full');
-        o.classList.remove('hidden');
-    } else {
-        s.classList.add('-translate-x-full');
-        o.classList.add('hidden');
-    }
-}
+/**
+ * Admin entry point
+ * Loads only the modules needed by admin pages.
+ */
+import Sidebar from './modules/sidebar.js';
+import Alerts  from './modules/alerts.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    Sidebar.init();
+    Alerts.init();
+});

@@ -11,7 +11,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/boutique.css') }}">
-    @livewireStyles
 </head>
 <body class="min-h-screen font-sans antialiased bg-[#18396e]">
 
@@ -77,6 +76,5 @@
     </div>
 
     @stack('scripts')
-    @livewireScripts
 </body>
 </html>

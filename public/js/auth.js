@@ -1,4 +1,9 @@
-function togglePwd() {
-    const input = document.getElementById('password');
-    input.type = input.type === 'password' ? 'text' : 'password';
-}
+/**
+ * Auth entry point
+ * Loads only the modules needed by auth pages (login / register).
+ */
+import Password from './modules/password.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    Password.init();
+});
