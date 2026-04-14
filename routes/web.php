@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -48,4 +49,9 @@ Route::middleware(['auth', 'admin', 'no-cache'])->prefix('admin')->name('admin.'
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
+
+    // Products
+    Route::resource('products', ProductController::class);
+    Route::patch('products/{product}/toggle-active', [ProductController::class, 'toggleActive'])
+        ->name('products.toggle-active');
 });
