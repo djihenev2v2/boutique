@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Accueil')
+@section('page-title', 'Accueil')
+@section('page-description', 'Bienvenue dans votre espace client')
 
 @section('content')
 <div class="mb-6">
