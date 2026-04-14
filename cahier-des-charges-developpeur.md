@@ -90,7 +90,7 @@
 
 ---
 
-### 2.3 PAGE : Liste des Produits
+### 2.3 PAGE : Liste des Produits ==> done
 
 **Description** : Affiche tous les produits avec filtres et actions.
 

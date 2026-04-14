@@ -192,3 +192,215 @@ CREATE TABLE `variant_attribute_values` (
 -- ============================================================
 INSERT INTO `product_attributes` (`name`) VALUES ('Couleur'), ('Taille'), ('Pointure');
 
+
+
+-- ============================================================
+-- Section COMMANDES — Wilayas, Codes promo, Commandes
+-- ============================================================
+
+DROP TABLE IF EXISTS `order_status_history`;
+DROP TABLE IF EXISTS `shipments`;
+DROP TABLE IF EXISTS `order_items`;
+DROP TABLE IF EXISTS `orders`;
+DROP TABLE IF EXISTS `promo_codes`;
+DROP TABLE IF EXISTS `wilayas`;
+
+-- ============================================================
+-- TABLE : wilayas (58 wilayas algériennes)
+-- ============================================================
+CREATE TABLE `wilayas` (
+    `id`            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `code`          VARCHAR(3) NOT NULL,
+    `name`          VARCHAR(100) NOT NULL,
+    `shipping_cost` DECIMAL(10,2) NOT NULL DEFAULT 400.00,
+    `created_at`    TIMESTAMP NULL DEFAULT NULL,
+    `updated_at`    TIMESTAMP NULL DEFAULT NULL,
+    UNIQUE KEY `wilayas_code_unique` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- SEED : 58 Wilayas
+-- ============================================================
+INSERT INTO `wilayas` (`code`, `name`, `shipping_cost`) VALUES
+('01', 'Adrar',              600.00),
+('02', 'Chlef',              400.00),
+('03', 'Laghouat',           500.00),
+('04', 'Oum El Bouaghi',     450.00),
+('05', 'Batna',              450.00),
+('06', 'Béjaïa',             400.00),
+('07', 'Biskra',             500.00),
+('08', 'Béchar',             600.00),
+('09', 'Blida',              350.00),
+('10', 'Bouira',             400.00),
+('11', 'Tamanrasset',        700.00),
+('12', 'Tébessa',            500.00),
+('13', 'Tlemcen',            500.00),
+('14', 'Tiaret',             450.00),
+('15', 'Tizi Ouzou',         400.00),
+('16', 'Alger',              300.00),
+('17', 'Djelfa',             450.00),
+('18', 'Jijel',              450.00),
+('19', 'Sétif',              450.00),
+('20', 'Saïda',              500.00),
+('21', 'Skikda',             450.00),
+('22', 'Sidi Bel Abbès',     500.00),
+('23', 'Annaba',             450.00),
+('24', 'Guelma',             450.00),
+('25', 'Constantine',        450.00),
+('26', 'Médéa',              400.00),
+('27', 'Mostaganem',         450.00),
+('28', 'Msila',              450.00),
+('29', 'Mascara',            500.00),
+('30', 'Ouargla',            550.00),
+('31', 'Oran',               400.00),
+('32', 'El Bayadh',          600.00),
+('33', 'Illizi',             700.00),
+('34', 'Bordj Bou Arreridj', 450.00),
+('35', 'Boumerdès',          350.00),
+('36', 'El Tarf',            450.00),
+('37', 'Tindouf',            700.00),
+('38', 'Tissemsilt',         450.00),
+('39', 'El Oued',            550.00),
+('40', 'Khenchela',          500.00),
+('41', 'Souk Ahras',         450.00),
+('42', 'Tipaza',             350.00),
+('43', 'Mila',               450.00),
+('44', 'Aïn Defla',          400.00),
+('45', 'Naâma',              600.00),
+('46', 'Aïn Témouchent',     450.00),
+('47', 'Ghardaïa',           550.00),
+('48', 'Relizane',           450.00),
+('49', 'Timimoun',           650.00),
+('50', 'Bordj Badji Mokhtar',750.00),
+('51', 'Ouled Djellal',      550.00),
+('52', 'Béni Abbès',         650.00),
+('53', 'In Salah',           700.00),
+('54', 'In Guezzam',         750.00),
+('55', 'Touggourt',          550.00),
+('56', 'Djanet',             700.00),
+('57', 'El M\'Ghair',        550.00),
+('58', 'El Meniaa',          600.00);
+
+-- ============================================================
+-- TABLE : promo_codes
+-- ============================================================
+CREATE TABLE `promo_codes` (
+    `id`            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `code`          VARCHAR(50) NOT NULL,
+    `discount`      DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `is_percentage` TINYINT(1) NOT NULL DEFAULT 0,
+    `is_active`     TINYINT(1) NOT NULL DEFAULT 1,
+    `used_count`    INT UNSIGNED NOT NULL DEFAULT 0,
+    `max_uses`      INT UNSIGNED NULL DEFAULT NULL,
+    `expires_at`    TIMESTAMP NULL DEFAULT NULL,
+    `created_at`    TIMESTAMP NULL DEFAULT NULL,
+    `updated_at`    TIMESTAMP NULL DEFAULT NULL,
+    UNIQUE KEY `promo_codes_code_unique` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- TABLE : orders
+-- ============================================================
+CREATE TABLE `orders` (
+    `id`              BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `order_number`    VARCHAR(20) NOT NULL,
+    `user_id`         BIGINT UNSIGNED NULL DEFAULT NULL,
+    -- Snapshot client au moment de la commande
+    `customer_name`   VARCHAR(255) NOT NULL,
+    `customer_phone`  VARCHAR(20) NOT NULL,
+    `customer_email`  VARCHAR(255) NULL DEFAULT NULL,
+    `wilaya_id`       INT UNSIGNED NOT NULL,
+    `address`         TEXT NOT NULL,
+    -- Montants
+    `subtotal`        DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `shipping_cost`   DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `discount`        DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `total`           DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `promo_code_id`   INT UNSIGNED NULL DEFAULT NULL,
+    -- Statut & paiement
+    `status`          ENUM('pending','confirmed','shipped','delivered','cancelled') NOT NULL DEFAULT 'pending',
+    `payment_method`  ENUM('cod','baridimob','cib') NOT NULL DEFAULT 'cod',
+    -- Notes & timestamps statuts
+    `notes`          TEXT NULL DEFAULT NULL,
+    `confirmed_at`   TIMESTAMP NULL DEFAULT NULL,
+    `shipped_at`     TIMESTAMP NULL DEFAULT NULL,
+    `delivered_at`   TIMESTAMP NULL DEFAULT NULL,
+    `cancelled_at`   TIMESTAMP NULL DEFAULT NULL,
+    `created_at`     TIMESTAMP NULL DEFAULT NULL,
+    `updated_at`     TIMESTAMP NULL DEFAULT NULL,
+    UNIQUE KEY `orders_order_number_unique` (`order_number`),
+    KEY `orders_user_id_index` (`user_id`),
+    KEY `orders_wilaya_id_index` (`wilaya_id`),
+    KEY `orders_status_index` (`status`),
+    KEY `orders_created_at_index` (`created_at`),
+    CONSTRAINT `orders_user_id_foreign`
+        FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+        ON DELETE SET NULL,
+    CONSTRAINT `orders_wilaya_id_foreign`
+        FOREIGN KEY (`wilaya_id`) REFERENCES `wilayas` (`id`),
+    CONSTRAINT `orders_promo_code_id_foreign`
+        FOREIGN KEY (`promo_code_id`) REFERENCES `promo_codes` (`id`)
+        ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- TABLE : order_items
+-- ============================================================
+CREATE TABLE `order_items` (
+    `id`                 BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `order_id`           BIGINT UNSIGNED NOT NULL,
+    `product_variant_id` BIGINT UNSIGNED NULL DEFAULT NULL,
+    -- Snapshots au moment de la commande
+    `product_name`       VARCHAR(255) NOT NULL,
+    `variant_label`      VARCHAR(255) NULL DEFAULT NULL,
+    `sku`                VARCHAR(100) NULL DEFAULT NULL,
+    `unit_price`         DECIMAL(10,2) NOT NULL,
+    `quantity`           INT UNSIGNED NOT NULL DEFAULT 1,
+    `subtotal`           DECIMAL(10,2) NOT NULL,
+    `created_at`         TIMESTAMP NULL DEFAULT NULL,
+    `updated_at`         TIMESTAMP NULL DEFAULT NULL,
+    KEY `order_items_order_id_index` (`order_id`),
+    KEY `order_items_variant_id_index` (`product_variant_id`),
+    CONSTRAINT `order_items_order_id_foreign`
+        FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+        ON DELETE CASCADE,
+    CONSTRAINT `order_items_variant_id_foreign`
+        FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`)
+        ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- TABLE : shipments
+-- ============================================================
+CREATE TABLE `shipments` (
+    `id`              BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `order_id`        BIGINT UNSIGNED NOT NULL,
+    `carrier`         VARCHAR(100) NULL DEFAULT NULL,
+    `tracking_number` VARCHAR(100) NULL DEFAULT NULL,
+    `status`          ENUM('pending','shipped','delivered') NOT NULL DEFAULT 'pending',
+    `shipped_at`      TIMESTAMP NULL DEFAULT NULL,
+    `delivered_at`    TIMESTAMP NULL DEFAULT NULL,
+    `created_at`      TIMESTAMP NULL DEFAULT NULL,
+    `updated_at`      TIMESTAMP NULL DEFAULT NULL,
+    UNIQUE KEY `shipments_order_id_unique` (`order_id`),
+    CONSTRAINT `shipments_order_id_foreign`
+        FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- TABLE : order_status_history
+-- ============================================================
+CREATE TABLE `order_status_history` (
+    `id`          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `order_id`    BIGINT UNSIGNED NOT NULL,
+    `from_status` ENUM('pending','confirmed','shipped','delivered','cancelled') NULL DEFAULT NULL,
+    `to_status`   ENUM('pending','confirmed','shipped','delivered','cancelled') NOT NULL,
+    `note`        TEXT NULL DEFAULT NULL,
+    `changed_at`  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    KEY `order_status_history_order_id_index` (`order_id`),
+    CONSTRAINT `order_status_history_order_id_foreign`
+        FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
