@@ -4,7 +4,10 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\CatalogController;
+use App\Http\Controllers\Client\CheckoutController;
+use App\Http\Controllers\Client\ClientOrderController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -49,8 +52,27 @@ Route::middleware(['auth', 'no-cache'])->get('/home', function () {
 // Routes Client (authentifié)
 // ============================================================
 Route::middleware(['auth', 'no-cache'])->group(function () {
+    // Catalogue
     Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalogue');
     Route::get('/produit/{slug}', [CatalogController::class, 'show'])->name('product.show');
+
+    // Panier
+    Route::get('/panier', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/panier/ajouter', [CartController::class, 'add'])->name('cart.add');
+    Route::patch('/panier/mettre-a-jour', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/panier/supprimer/{variantId}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::delete('/panier/vider', [CartController::class, 'clear'])->name('cart.clear');
+    Route::post('/panier/promo', [CartController::class, 'applyPromo'])->name('cart.promo');
+    Route::delete('/panier/promo', [CartController::class, 'removePromo'])->name('cart.promo.remove');
+
+    // Checkout
+    Route::get('/commander', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/commander', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    // Mes commandes
+    Route::get('/mes-commandes', [ClientOrderController::class, 'index'])->name('orders.index');
+    Route::get('/mes-commandes/{orderNumber}', [ClientOrderController::class, 'show'])->name('orders.show');
+    Route::get('/commande-confirmee/{orderNumber}', [ClientOrderController::class, 'confirmation'])->name('orders.confirmation');
 });
 
 // ============================================================

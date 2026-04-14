@@ -61,17 +61,21 @@
                 <span>Nouveautés</span>
             </a>
 
-            <a href="#"
-               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]">
-                <svg class="w-[18px] h-[18px] flex-shrink-0 text-[#747780] group-hover:text-[#18396e]" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <a href="{{ route('cart.index') }}"
+               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('cart.*', 'checkout*', 'orders.confirmation') ? 'bg-[#002352] text-white shadow-md' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
+                <svg class="w-[18px] h-[18px] flex-shrink-0 {{ request()->routeIs('cart.*', 'checkout*', 'orders.confirmation') ? 'text-white' : 'text-[#747780] group-hover:text-[#18396e]' }}" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.837L5.61 7.5m0 0L6.75 13.5h10.69c.55 0 1.02-.374 1.137-.911l1.219-5.625a1.125 1.125 0 00-1.099-1.364H5.61zM6.75 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm10.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
                 </svg>
-                <span>Panier</span>
+                <span class="flex-1">Panier</span>
+                @php $cartCount = \App\Http\Controllers\Client\CartController::getCount(); @endphp
+                @if($cartCount > 0)
+                <span class="ml-auto text-[10px] font-bold min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center {{ request()->routeIs('cart.*', 'checkout*', 'orders.confirmation') ? 'bg-white text-[#002352]' : 'bg-[#002352] text-white' }}">{{ $cartCount }}</span>
+                @endif
             </a>
 
-            <a href="#"
-               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]">
-                <svg class="w-[18px] h-[18px] flex-shrink-0 text-[#747780] group-hover:text-[#18396e]" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <a href="{{ route('orders.index') }}"
+               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('orders.index', 'orders.show') ? 'bg-[#002352] text-white shadow-md' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
+                <svg class="w-[18px] h-[18px] flex-shrink-0 {{ request()->routeIs('orders.index', 'orders.show') ? 'text-white' : 'text-[#747780] group-hover:text-[#18396e]' }}" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/>
                 </svg>
                 <span>Mes commandes</span>
@@ -157,11 +161,14 @@
                 </div>
 
                 {{-- Panier --}}
-                <button class="relative p-2 text-slate-400 hover:text-[#18396e] hover:bg-[#f2f4f6] rounded-full transition-all duration-150" title="Panier">
+                <a href="{{ route('cart.index') }}" class="relative p-2 text-slate-400 hover:text-[#18396e] hover:bg-[#f2f4f6] rounded-full transition-all duration-150" title="Panier">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.837L5.61 7.5m0 0L6.75 13.5h10.69c.55 0 1.02-.374 1.137-.911l1.219-5.625a1.125 1.125 0 00-1.099-1.364H5.61zM6.75 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm10.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
                     </svg>
-                </button>
+                    @if(isset($cartCount) && $cartCount > 0)
+                    <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#002352] text-white text-[9px] font-bold rounded-full flex items-center justify-center">{{ $cartCount > 9 ? '9+' : $cartCount }}</span>
+                    @endif
+                </a>
 
                 {{-- Notifications --}}
                 <button class="relative p-2 text-slate-400 hover:text-[#18396e] hover:bg-[#f2f4f6] rounded-full transition-all duration-150" title="Notifications">

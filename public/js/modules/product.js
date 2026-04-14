@@ -157,26 +157,59 @@
   updateButtonStates();
   updateUI();
 
-  // ── Panier (stub — à brancher sur l'implémentation panier) ────
+  // ── Panier ────────────────────────────────────────────────────
   window.addToCart = function () {
     const variantId = document.getElementById('selectedVariantId').value;
     const qty       = parseInt(document.getElementById('qtyInput').value, 10);
     if (!variantId) return;
 
-    // TODO: envoyer POST /panier/ajouter avec variantId + qty
-    console.log('[Panier] Ajouter variante', variantId, '×', qty);
+    const btn  = document.getElementById('addToCartBtn');
+    const orig = btn.innerHTML;
+    btn.disabled  = true;
+    btn.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>Ajout en cours...</span>';
 
-    // Feedback visuel temporaire
-    const btn = document.getElementById('addToCartBtn');
-    const orig = btn.textContent;
-    btn.textContent = '✓ Ajouté !';
-    btn.classList.add('bg-green-600');
-    btn.classList.remove('bg-[#002352]', 'hover:bg-[#18396e]');
-    setTimeout(() => {
-      btn.textContent = orig;
-      btn.classList.remove('bg-green-600');
-      btn.classList.add('bg-[#002352]', 'hover:bg-[#18396e]');
-    }, 1800);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+
+    fetch('/panier/ajouter', {
+      method  : 'POST',
+      headers : {
+        'Content-Type'     : 'application/json',
+        'X-CSRF-TOKEN'     : csrfToken,
+        'X-Requested-With' : 'XMLHttpRequest',
+        'Accept'           : 'application/json',
+      },
+      body: JSON.stringify({ variant_id: parseInt(variantId, 10), quantity: qty }),
+    })
+    .then(async res => {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Erreur');
+
+      // Update badge(s)
+      const count = data.cart_count ?? 0;
+      document.querySelectorAll('[data-cart-badge]').forEach(el => {
+        el.textContent = count;
+        el.style.display = count > 0 ? '' : 'none';
+      });
+
+      // Success state
+      btn.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Ajouté au panier !</span>';
+      btn.classList.add('bg-emerald-600');
+      btn.classList.remove('bg-[#002352]', 'hover:bg-[#18396e]');
+
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.disabled  = false;
+        btn.classList.remove('bg-emerald-600');
+        btn.classList.add('bg-[#002352]', 'hover:bg-[#18396e]');
+      }, 2000);
+    })
+    .catch(err => {
+      btn.innerHTML = '<span class="text-red-300">Erreur — réessayez</span>';
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.disabled  = false;
+      }, 2000);
+    });
   };
 
   // ── WhatsApp ───────────────────────────────────────────────────

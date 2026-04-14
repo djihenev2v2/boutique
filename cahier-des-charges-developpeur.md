@@ -694,7 +694,7 @@ Créer / Modifier un Produit
 
 ---
 
-### 3.2 PAGE : Catalogue (Liste des produits)
+### 3.2 PAGE : Catalogue (Liste des produits)==>done
 
 **Description** : Affiche tous les produits de la boutique avec filtres.
 
@@ -746,7 +746,7 @@ Créer / Modifier un Produit
 
 ---
 
-### 3.3 PAGE : Détail Produit
+### 3.3 PAGE : Détail Produit ==> done
 
 **Description** : Fiche complète d'un produit avec sélection de variante et ajout au panier.
 
@@ -813,7 +813,7 @@ Pour chaque type d'attribut du produit, afficher un sélecteur :
 
 ---
 
-### 3.4 PAGE : Panier
+### 3.4 PAGE : Panier ==> done 
 
 **Description** : Récapitulatif des articles avant la commande.
 
@@ -859,7 +859,7 @@ Pour chaque type d'attribut du produit, afficher un sélecteur :
 
 ---
 
-### 3.5 PAGE : Checkout (Passer commande)
+### 3.5 PAGE : Checkout (Passer commande) ==> done 
 
 **Description** : Formulaire simplifié de commande, optimisé pour le marché algérien.
 
@@ -924,7 +924,7 @@ Pour chaque type d'attribut du produit, afficher un sélecteur :
 
 ---
 
-### 3.6 PAGE : Confirmation de Commande
+### 3.6 PAGE : Confirmation de Commande ==> done 
 
 **Description** : Page affichée après une commande réussie.
 
@@ -949,7 +949,7 @@ Pour chaque type d'attribut du produit, afficher un sélecteur :
 
 ---
 
-### 3.7 PAGE : Suivi de Commande (optionnel)
+### 3.7 PAGE : Suivi de Commande (optionnel) ==> done 
 
 **Description** : Le client peut suivre sa commande avec son numéro de téléphone.
 

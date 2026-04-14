@@ -389,6 +389,47 @@ CREATE TABLE `shipments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
+-- TABLE : carts (panier persistant par utilisateur)
+-- ============================================================
+DROP TABLE IF EXISTS `cart_items`;
+DROP TABLE IF EXISTS `carts`;
+
+CREATE TABLE `carts` (
+    `id`            BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id`       BIGINT UNSIGNED NOT NULL,
+    `promo_code_id` INT UNSIGNED NULL DEFAULT NULL,
+    `created_at`    TIMESTAMP NULL DEFAULT NULL,
+    `updated_at`    TIMESTAMP NULL DEFAULT NULL,
+    UNIQUE KEY `carts_user_id_unique` (`user_id`),
+    CONSTRAINT `carts_user_id_foreign`
+        FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+        ON DELETE CASCADE,
+    CONSTRAINT `carts_promo_code_id_foreign`
+        FOREIGN KEY (`promo_code_id`) REFERENCES `promo_codes` (`id`)
+        ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- TABLE : cart_items
+-- ============================================================
+CREATE TABLE `cart_items` (
+    `id`                 BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `cart_id`            BIGINT UNSIGNED NOT NULL,
+    `product_variant_id` BIGINT UNSIGNED NOT NULL,
+    `quantity`           INT UNSIGNED NOT NULL DEFAULT 1,
+    `created_at`         TIMESTAMP NULL DEFAULT NULL,
+    `updated_at`         TIMESTAMP NULL DEFAULT NULL,
+    UNIQUE KEY `cart_items_cart_variant_unique` (`cart_id`, `product_variant_id`),
+    KEY `cart_items_variant_id_index` (`product_variant_id`),
+    CONSTRAINT `cart_items_cart_id_foreign`
+        FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`)
+        ON DELETE CASCADE,
+    CONSTRAINT `cart_items_variant_id_foreign`
+        FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
 -- TABLE : order_status_history
 -- ============================================================
 CREATE TABLE `order_status_history` (
