@@ -53,7 +53,7 @@
 
 ---
 
-### 2.2 PAGE : Dashboard (Accueil Admin)
+### 2.2 PAGE : Dashboard (Accueil Admin)==>done
 
 **Description** : Vue d'ensemble de l'activité de la boutique.
 

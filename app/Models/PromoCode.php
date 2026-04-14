@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class PromoCode extends Model
 {
     protected $fillable = [
-        'code', 'discount', 'is_percentage', 'is_active',
+        'code', 'discount', 'min_order', 'is_percentage', 'is_active',
         'used_count', 'max_uses', 'expires_at',
     ];
 
     protected $casts = [
         'discount'      => 'decimal:2',
+        'min_order'     => 'decimal:2',
         'is_percentage' => 'boolean',
         'is_active'     => 'boolean',
         'expires_at'    => 'datetime',

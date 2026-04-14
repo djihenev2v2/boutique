@@ -213,6 +213,7 @@ CREATE TABLE `wilayas` (
     `code`          VARCHAR(3) NOT NULL,
     `name`          VARCHAR(100) NOT NULL,
     `shipping_cost` DECIMAL(10,2) NOT NULL DEFAULT 400.00,
+    `is_active`     TINYINT(1) NOT NULL DEFAULT 1,
     `created_at`    TIMESTAMP NULL DEFAULT NULL,
     `updated_at`    TIMESTAMP NULL DEFAULT NULL,
     UNIQUE KEY `wilayas_code_unique` (`code`)
@@ -288,6 +289,7 @@ CREATE TABLE `promo_codes` (
     `id`            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `code`          VARCHAR(50) NOT NULL,
     `discount`      DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    `min_order`     DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     `is_percentage` TINYINT(1) NOT NULL DEFAULT 0,
     `is_active`     TINYINT(1) NOT NULL DEFAULT 1,
     `used_count`    INT UNSIGNED NOT NULL DEFAULT 0,

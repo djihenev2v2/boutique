@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ClientAdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PromoCodeController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\WilayaController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\CatalogController;
@@ -109,4 +112,20 @@ Route::middleware(['auth', 'admin', 'no-cache'])->prefix('admin')->name('admin.'
     // Settings (2.12)
     Route::get('settings', [SettingsController::class, 'index'])->name('settings');
     Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
+
+    // Clients (2.8 / 2.9)
+    Route::get('clients', [ClientAdminController::class, 'index'])->name('clients.index');
+    Route::get('clients/{user}', [ClientAdminController::class, 'show'])->name('clients.show');
+
+    // Livraison - Wilayas (2.10)
+    Route::get('livraison', [WilayaController::class, 'index'])->name('livraison.index');
+    Route::post('livraison/save', [WilayaController::class, 'saveAll'])->name('livraison.save');
+    Route::post('livraison/bulk', [WilayaController::class, 'bulkUpdate'])->name('livraison.bulk');
+
+    // Marketing - Codes promo (2.11)
+    Route::get('marketing', [PromoCodeController::class, 'index'])->name('marketing.index');
+    Route::post('marketing', [PromoCodeController::class, 'store'])->name('marketing.store');
+    Route::put('marketing/{promoCode}', [PromoCodeController::class, 'update'])->name('marketing.update');
+    Route::delete('marketing/{promoCode}', [PromoCodeController::class, 'destroy'])->name('marketing.destroy');
+    Route::patch('marketing/{promoCode}/toggle', [PromoCodeController::class, 'toggle'])->name('marketing.toggle');
 });

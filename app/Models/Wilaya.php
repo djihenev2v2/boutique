@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Wilaya extends Model
 {
-    protected $fillable = ['code', 'name', 'shipping_cost'];
+    protected $fillable = ['code', 'name', 'shipping_cost', 'is_active'];
 
     protected $casts = [
         'shipping_cost' => 'decimal:2',
+        'is_active'     => 'boolean',
     ];
 
     public function orders(): HasMany
