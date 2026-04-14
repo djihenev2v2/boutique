@@ -64,7 +64,7 @@
             </a>
 
             {{-- Catégories --}}
-            <a href="#"
+            <a href="{{ route('admin.categories.index') }}"
                class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('admin.categories*') ? 'bg-[#18396e] text-white shadow-lg' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
                 <svg class="w-[18px] h-[18px] flex-shrink-0 {{ request()->routeIs('admin.categories*') ? 'text-white' : 'text-[#747780] group-hover:text-[#18396e]' }}" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/>

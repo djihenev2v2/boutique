@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,12 @@ Route::middleware(['auth', 'admin', 'no-cache'])->prefix('admin')->name('admin.'
     Route::resource('products', ProductController::class);
     Route::patch('products/{product}/toggle-active', [ProductController::class, 'toggleActive'])
         ->name('products.toggle-active');
+
+    // Categories (2.7)
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::patch('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     // Orders (2.5 / 2.6)
     Route::get('orders/export', [OrderController::class, 'export'])->name('orders.export');

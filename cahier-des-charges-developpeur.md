@@ -226,7 +226,7 @@ Créer / Modifier un Produit
 
 ---
 
-### 2.5 PAGE : Liste des Commandes
+### 2.5 PAGE : Liste des Commandes ==> done 
 
 **Description** : Affiche toutes les commandes avec filtres et gestion des statuts.
 
@@ -283,7 +283,7 @@ Créer / Modifier un Produit
 
 ---
 
-### 2.6 PAGE : Détail d'une Commande
+### 2.6 PAGE : Détail d'une Commande==> done 
 
 **Description** : Affiche toutes les informations d'une commande avec possibilité de la gérer.
 
