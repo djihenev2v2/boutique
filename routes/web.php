@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\CatalogController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\ClientOrderController;
+use App\Http\Controllers\Client\PageController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -73,15 +76,16 @@ Route::middleware(['auth', 'no-cache'])->group(function () {
     Route::get('/mes-commandes', [ClientOrderController::class, 'index'])->name('orders.index');
     Route::get('/mes-commandes/{orderNumber}', [ClientOrderController::class, 'show'])->name('orders.show');
     Route::get('/commande-confirmee/{orderNumber}', [ClientOrderController::class, 'confirmation'])->name('orders.confirmation');
+
+    // Pages statiques
+    Route::get('/conditions-de-vente', [PageController::class, 'termsOfSale'])->name('terms');
 });
 
 // ============================================================
 // Routes Admin (authentifié + rôle admin)
 // ============================================================
 Route::middleware(['auth', 'admin', 'no-cache'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Products
     Route::resource('products', ProductController::class);
@@ -101,4 +105,8 @@ Route::middleware(['auth', 'admin', 'no-cache'])->prefix('admin')->name('admin.'
     Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
     Route::patch('orders/{order}/shipment', [OrderController::class, 'updateShipment'])->name('orders.updateShipment');
     Route::patch('orders/{order}/note', [OrderController::class, 'updateNote'])->name('orders.updateNote');
+
+    // Settings (2.12)
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings');
+    Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
 });

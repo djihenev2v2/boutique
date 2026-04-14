@@ -33,58 +33,56 @@
                 </svg>
             </div>
         </div>
-        <p class="text-[28px] font-bold text-[#002352] leading-none">0 DA</p>
+        <p class="text-[28px] font-bold text-[#002352] leading-none">{{ number_format($revenue, 0, ',', ' ') }} DA</p>
         <div class="flex items-center gap-1.5 mt-2">
-            <span class="inline-flex items-center gap-0.5 text-[11px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-2 py-0.5">
-                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"/></svg>
-                +12.4%
-            </span>
-            <span class="text-[11px] text-[#5d5f5f]">ce mois-ci</span>
+            <span class="text-[11px] text-[#5d5f5f]">Commandes livrées</span>
         </div>
         <div class="mt-4 h-1 w-full bg-[#edeef0] rounded-full overflow-hidden">
-            <div class="h-full bg-gradient-to-r from-[#002352] to-[#18396e] w-[75%] rounded-full"></div>
+            <div class="h-full bg-gradient-to-r from-[#002352] to-[#18396e] rounded-full" style="width:{{ $revenue > 0 ? '75' : '5' }}%"></div>
         </div>
     </div>
 
-    {{-- Commandes --}}
+    {{-- Commandes du jour --}}
     <div class="bg-white rounded-2xl p-5 shadow-[0px_20px_40px_rgba(24,57,110,0.06)] transition-all duration-200 hover:shadow-[0px_25px_50px_rgba(24,57,110,0.12)] hover:-translate-y-0.5">
         <div class="flex items-start justify-between mb-4">
-            <p class="text-[12px] font-semibold uppercase tracking-widest text-[#5d5f5f]">Commandes</p>
+            <p class="text-[12px] font-semibold uppercase tracking-widest text-[#5d5f5f]">Commandes du jour</p>
             <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-50">
                 <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/>
                 </svg>
             </div>
         </div>
-        <p class="text-[28px] font-bold text-[#002352] leading-none">0</p>
+        <p class="text-[28px] font-bold text-[#002352] leading-none">{{ $todayOrders }}</p>
         <div class="flex items-center gap-1.5 mt-2">
-            <span class="inline-flex items-center gap-0.5 text-[11px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-2 py-0.5">
-                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"/></svg>
-                +5.2%
+            @if($pendingCount > 0)
+            <span class="inline-flex items-center gap-0.5 text-[11px] font-semibold text-amber-600 bg-amber-50 rounded-full px-2 py-0.5">
+                {{ $pendingCount }} en attente
             </span>
-            <span class="text-[11px] text-[#5d5f5f]">vs hier</span>
+            @else
+            <span class="text-[11px] text-[#5d5f5f]">Aujourd'hui</span>
+            @endif
         </div>
         <div class="mt-4 h-1 w-full bg-[#edeef0] rounded-full overflow-hidden">
-            <div class="h-full bg-gradient-to-r from-[#ffb783] to-[#dc945f] w-[60%] rounded-full"></div>
+            <div class="h-full bg-gradient-to-r from-[#ffb783] to-[#dc945f] rounded-full" style="width:{{ min(100, $todayOrders * 10) }}%"></div>
         </div>
     </div>
 
-    {{-- Nouveaux clients --}}
+    {{-- Total clients --}}
     <div class="bg-white rounded-2xl p-5 shadow-[0px_20px_40px_rgba(24,57,110,0.06)] transition-all duration-200 hover:shadow-[0px_25px_50px_rgba(24,57,110,0.12)] hover:-translate-y-0.5">
         <div class="flex items-start justify-between mb-4">
-            <p class="text-[12px] font-semibold uppercase tracking-widest text-[#5d5f5f]">Nouveaux clients</p>
+            <p class="text-[12px] font-semibold uppercase tracking-widest text-[#5d5f5f]">Clients</p>
             <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-indigo-50">
                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"/>
                 </svg>
             </div>
         </div>
-        <p class="text-[28px] font-bold text-[#002352] leading-none">0</p>
+        <p class="text-[28px] font-bold text-[#002352] leading-none">{{ $totalClients }}</p>
         <div class="flex items-center gap-1.5 mt-2">
-            <span class="inline-flex items-center gap-0.5 text-[11px] font-semibold text-[#5d5f5f] bg-[#edeef0] rounded-full px-2 py-0.5">— Stable</span>
+            <span class="text-[11px] text-[#5d5f5f]">Clients enregistrés</span>
         </div>
         <div class="mt-4 h-1 w-full bg-[#edeef0] rounded-full overflow-hidden">
-            <div class="h-full bg-[#002352]/20 w-[45%] rounded-full"></div>
+            <div class="h-full bg-indigo-400 rounded-full" style="width:{{ min(100, max(5, $totalClients)) }}%"></div>
         </div>
     </div>
 
@@ -98,13 +96,44 @@
                 </svg>
             </div>
         </div>
-        <p class="text-[28px] font-bold text-[#002352] leading-none">0</p>
+        <p class="text-[28px] font-bold text-[#002352] leading-none">{{ $outOfStock }}</p>
         <div class="flex items-center gap-1.5 mt-2">
-            <span class="text-[11px] text-[#5d5f5f]">À réapprovisionner</span>
+            @if($outOfStock > 0)
+            <span class="inline-flex items-center gap-0.5 text-[11px] font-semibold text-red-600 bg-red-50 rounded-full px-2 py-0.5">
+                À réapprovisionner
+            </span>
+            @else
+            <span class="inline-flex items-center gap-0.5 text-[11px] font-semibold text-emerald-600 bg-emerald-50 rounded-full px-2 py-0.5">
+                Tout en stock ✓
+            </span>
+            @endif
         </div>
         <div class="mt-4 h-1 w-full bg-[#edeef0] rounded-full overflow-hidden">
-            <div class="h-full bg-amber-400/40 w-[20%] rounded-full"></div>
+            <div class="h-full bg-amber-400 rounded-full" style="width:{{ $outOfStock > 0 ? min(100, $outOfStock * 5) : 5 }}%"></div>
         </div>
+    </div>
+</div>
+
+{{-- Sales chart --}}
+<div class="bg-white rounded-2xl shadow-[0px_20px_40px_rgba(24,57,110,0.06)] p-6 mb-5">
+    <div class="flex items-center justify-between mb-5">
+        <div>
+            <h3 class="text-[15px] font-bold text-[#002352]">Évolution des ventes</h3>
+            <p class="text-[12px] text-[#747780] mt-0.5">Chiffre d'affaires par jour (DA)</p>
+        </div>
+        <div class="flex items-center gap-1.5 bg-[#f2f4f6] p-1 rounded-xl">
+            <button id="btn7" onclick="switchChart(7)"
+                class="text-[12px] font-semibold px-3 py-1.5 rounded-lg transition-all bg-white text-[#002352] shadow-sm">
+                7 jours
+            </button>
+            <button id="btn30" onclick="switchChart(30)"
+                class="text-[12px] font-semibold px-3 py-1.5 rounded-lg transition-all text-[#747780]">
+                30 jours
+            </button>
+        </div>
+    </div>
+    <div class="h-[220px]">
+        <canvas id="salesChart"></canvas>
     </div>
 </div>
 
@@ -115,7 +144,7 @@
     <div class="xl:col-span-2 bg-white rounded-2xl shadow-[0px_20px_40px_rgba(24,57,110,0.06)] overflow-hidden">
         <div class="flex items-center justify-between px-6 py-4 border-b border-[#f2f4f6]">
             <h3 class="text-[15px] font-bold text-[#002352]">Commandes Récentes</h3>
-            <a href="#" class="text-[12px] font-medium text-[#27467b] hover:text-[#002352] hover:underline">Voir tout</a>
+            <a href="{{ route('admin.orders.index') }}" class="text-[12px] font-medium text-[#27467b] hover:text-[#002352] hover:underline">Voir tout</a>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full">
@@ -123,12 +152,47 @@
                     <tr class="bg-[#f2f4f6] border-b border-[#edeef0]">
                         <th class="text-left px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-[#5d5f5f]">Commande</th>
                         <th class="text-left px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-[#5d5f5f]">Client</th>
-                        <th class="text-left px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-[#5d5f5f]">Date</th>
+                        <th class="text-left px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-[#5d5f5f]">Wilaya</th>
                         <th class="text-left px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-[#5d5f5f]">Total</th>
                         <th class="text-left px-4 py-3 text-[10px] font-bold uppercase tracking-widest text-[#5d5f5f]">Statut</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse($recentOrders as $order)
+                    @php
+                        $statusColors = [
+                            'pending'   => 'bg-amber-100 text-amber-700',
+                            'confirmed' => 'bg-blue-100 text-blue-700',
+                            'shipped'   => 'bg-violet-100 text-violet-700',
+                            'delivered' => 'bg-emerald-100 text-emerald-700',
+                            'cancelled' => 'bg-red-100 text-red-700',
+                        ];
+                        $statusLabels = [
+                            'pending'   => 'En attente',
+                            'confirmed' => 'Confirmée',
+                            'shipped'   => 'Expédiée',
+                            'delivered' => 'Livrée',
+                            'cancelled' => 'Annulée',
+                        ];
+                        $color = $statusColors[$order->status] ?? 'bg-gray-100 text-gray-700';
+                        $label = $statusLabels[$order->status] ?? $order->status;
+                    @endphp
+                    <tr class="border-b border-[#f2f4f6] hover:bg-[#f8f9fb] transition-colors cursor-pointer"
+                        onclick="window.location='{{ route('admin.orders.show', $order->id) }}'">
+                        <td class="px-6 py-3">
+                            <span class="text-[13px] font-semibold text-[#002352]">{{ $order->order_number }}</span>
+                            <p class="text-[11px] text-[#747780]">{{ $order->created_at->format('d/m/Y H:i') }}</p>
+                        </td>
+                        <td class="px-4 py-3 text-[13px] text-[#43474f]">{{ Str::limit($order->customer_name, 20) }}</td>
+                        <td class="px-4 py-3 text-[13px] text-[#5d5f5f]">{{ $order->wilaya?->name ?? '—' }}</td>
+                        <td class="px-4 py-3 text-[13px] font-semibold text-[#002352]">{{ number_format($order->total, 0, ',', ' ') }} DA</td>
+                        <td class="px-4 py-3">
+                            <span class="inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded-full {{ $color }}">
+                                {{ $label }}
+                            </span>
+                        </td>
+                    </tr>
+                    @empty
                     <tr>
                         <td colspan="5" class="px-6 py-14 text-center">
                             <div class="flex flex-col items-center">
@@ -142,6 +206,7 @@
                             </div>
                         </td>
                     </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -153,15 +218,23 @@
         {{-- Best-sellers --}}
         <div class="bg-white rounded-2xl shadow-[0px_20px_40px_rgba(24,57,110,0.06)] overflow-hidden">
             <div class="flex items-center justify-between px-5 py-4 border-b border-[#f2f4f6]">
-                <h3 class="text-[15px] font-bold text-[#002352]">Best-Sellers</h3>
-                <button class="p-1.5 text-[#747780] hover:text-[#18396e] hover:bg-[#f2f4f6] rounded-lg transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/>
-                    </svg>
-                </button>
+                <h3 class="text-[15px] font-bold text-[#002352]">Top 5 Produits</h3>
+                <span class="text-[11px] text-[#747780]">Par quantité vendue</span>
             </div>
-            <div class="px-5 py-4 space-y-3">
-                {{-- Empty state --}}
+            <div class="px-5 py-3 divide-y divide-[#f2f4f6]">
+                @forelse($topProducts as $i => $product)
+                <div class="flex items-center gap-3 py-3">
+                    <span class="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0
+                        {{ $i === 0 ? 'bg-amber-100 text-amber-700' : ($i === 1 ? 'bg-slate-100 text-slate-600' : ($i === 2 ? 'bg-orange-100 text-orange-600' : 'bg-[#f2f4f6] text-[#5d5f5f]')) }}">
+                        {{ $i + 1 }}
+                    </span>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-[13px] font-semibold text-[#002352] truncate">{{ $product->product_name }}</p>
+                        <p class="text-[11px] text-[#747780]">{{ $product->total_qty }} vendus</p>
+                    </div>
+                    <span class="text-[12px] font-bold text-[#27467b] flex-shrink-0">{{ number_format($product->total_revenue, 0, ',', ' ') }} DA</span>
+                </div>
+                @empty
                 <div class="flex flex-col items-center py-6 text-center">
                     <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-2.5 bg-[#f2f4f6]">
                         <svg class="w-6 h-6 text-[#c4c6d1]" fill="none" stroke="currentColor" stroke-width="1.25" viewBox="0 0 24 24">
@@ -170,18 +243,120 @@
                     </div>
                     <p class="text-[12.5px] text-[#5d5f5f]">Aucun produit vendu</p>
                 </div>
+                @endforelse
             </div>
         </div>
 
-        {{-- Promo banner --}}
-        <div class="rounded-2xl p-5 bg-gradient-to-br from-[#002352] to-[#18396e] shadow-[0px_20px_40px_rgba(0,35,82,0.25)] relative overflow-hidden group">
-            <p class="text-white/70 text-[10px] font-bold uppercase tracking-widest mb-2">Expansion</p>
-            <h4 class="text-white font-bold text-[17px] leading-snug mb-4">Optimisez votre<br>inventaire avec l'IA</h4>
-            <button class="bg-white/20 hover:bg-white/30 border border-white/25 text-white text-[12px] font-semibold px-4 py-2 rounded-full transition-all shadow-sm">
-                Découvrir
-            </button>
-            <svg class="absolute -bottom-4 -right-4 w-20 h-20 text-white/10 group-hover:scale-125 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        {{-- Quick links --}}
+        <div class="rounded-2xl p-5 bg-gradient-to-br from-[#002352] to-[#18396e] shadow-[0px_20px_40px_rgba(0,35,82,0.25)] relative overflow-hidden">
+            <p class="text-white/70 text-[10px] font-bold uppercase tracking-widest mb-2">Accès rapide</p>
+            <h4 class="text-white font-bold text-[17px] leading-snug mb-4">Gérer votre boutique</h4>
+            <div class="flex flex-col gap-2">
+                <a href="{{ route('admin.orders.index') }}"
+                   class="flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/20 text-white text-[12px] font-semibold px-4 py-2.5 rounded-xl transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/>
+                    </svg>
+                    @if($pendingCount > 0)
+                    <span class="flex-1">Commandes</span>
+                    <span class="text-[11px] font-bold bg-amber-400 text-amber-900 rounded-full px-2 py-0.5">{{ $pendingCount }}</span>
+                    @else
+                    Commandes
+                    @endif
+                </a>
+                <a href="{{ route('admin.products.index') }}"
+                   class="flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/20 text-white text-[12px] font-semibold px-4 py-2.5 rounded-xl transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
+                    </svg>
+                    <span class="flex-1">Produits</span>
+                    @if($outOfStock > 0)
+                    <span class="text-[11px] font-bold bg-red-400 text-red-900 rounded-full px-2 py-0.5">{{ $outOfStock }} rupture</span>
+                    @endif
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const chart7Data  = @json($chart7);
+const chart30Data = @json($chart30);
+let salesChart    = null;
+
+function buildChart(data) {
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 220);
+    gradient.addColorStop(0, 'rgba(24, 57, 110, 0.18)');
+    gradient.addColorStop(1, 'rgba(24, 57, 110, 0.00)');
+    if (salesChart) salesChart.destroy();
+    salesChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Ventes (DA)',
+                data: data.revenues,
+                fill: true,
+                backgroundColor: gradient,
+                borderColor: '#18396e',
+                borderWidth: 2.5,
+                tension: 0.4,
+                pointBackgroundColor: '#18396e',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { intersect: false, mode: 'index' },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#002352',
+                    padding: 10,
+                    cornerRadius: 10,
+                    titleFont: { size: 12 },
+                    bodyFont: { size: 13, weight: 'bold' },
+                    callbacks: {
+                        label: ctx => ' ' + new Intl.NumberFormat('fr-DZ').format(ctx.raw) + ' DA',
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { size: 11 }, color: '#747780' },
+                },
+                y: {
+                    grid: { color: '#f2f4f6' },
+                    ticks: {
+                        font: { size: 11 }, color: '#747780',
+                        callback: v => new Intl.NumberFormat('fr-DZ', { notation: 'compact' }).format(v) + ' DA',
+                    }
+                }
+            }
+        }
+    });
+}
+
+function switchChart(days) {
+    buildChart(days === 7 ? chart7Data : chart30Data);
+    document.getElementById('btn7').className  = days === 7
+        ? 'text-[12px] font-semibold px-3 py-1.5 rounded-lg transition-all bg-white text-[#002352] shadow-sm'
+        : 'text-[12px] font-semibold px-3 py-1.5 rounded-lg transition-all text-[#747780]';
+    document.getElementById('btn30').className = days === 30
+        ? 'text-[12px] font-semibold px-3 py-1.5 rounded-lg transition-all bg-white text-[#002352] shadow-sm'
+        : 'text-[12px] font-semibold px-3 py-1.5 rounded-lg transition-all text-[#747780]';
+}
+
+document.addEventListener('DOMContentLoaded', () => buildChart(chart7Data));
+</script>
+@endpush

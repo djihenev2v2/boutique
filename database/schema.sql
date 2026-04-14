@@ -430,6 +430,30 @@ CREATE TABLE `cart_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
+-- TABLE : settings (paramètres de la boutique)
+-- ============================================================
+DROP TABLE IF EXISTS `settings`;
+CREATE TABLE `settings` (
+    `id`         BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `key`        VARCHAR(255) NOT NULL,
+    `value`      LONGTEXT NULL,
+    `created_at` TIMESTAMP NULL DEFAULT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL,
+    UNIQUE KEY `settings_key_unique` (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `settings` (`key`, `value`) VALUES
+    ('terms',              NULL),
+    ('shop_name',          'Ma Boutique'),
+    ('shop_phone',         ''),
+    ('shop_email',         ''),
+    ('shop_address',       ''),
+    ('primary_color',      '#18396e'),
+    ('cod_enabled',        '1'),
+    ('baridimob_enabled',  '0'),
+    ('cib_enabled',        '0');
+
+-- ============================================================
 -- TABLE : order_status_history
 -- ============================================================
 CREATE TABLE `order_status_history` (
