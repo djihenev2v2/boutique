@@ -13,11 +13,13 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\CatalogController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\ClientOrderController;
+use App\Http\Controllers\Client\ClientProfileController;
+use App\Http\Controllers\Client\FavoritesController;
 use App\Http\Controllers\Client\PageController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
-// Route racine — redirige vers login ou dashboard
+// Route racine — landing page publique ou redirection
 // ============================================================
 Route::get('/', function () {
     if (auth()->check()) {
@@ -25,8 +27,8 @@ Route::get('/', function () {
             ? redirect()->route('admin.dashboard')
             : redirect()->route('home');
     }
-    return redirect()->route('login');
-});
+    return view('landing');
+})->name('landing');
 
 // ============================================================
 // Routes authentification (guest uniquement)
@@ -82,6 +84,15 @@ Route::middleware(['auth', 'no-cache'])->group(function () {
 
     // Pages statiques
     Route::get('/conditions-de-vente', [PageController::class, 'termsOfSale'])->name('terms');
+
+    // Favoris
+    Route::get('/favoris', [FavoritesController::class, 'index'])->name('favoris.index');
+    Route::post('/favoris/toggle', [FavoritesController::class, 'toggle'])->name('favoris.toggle');
+
+    // Profil client
+    Route::get('/mon-profil', [ClientProfileController::class, 'edit'])->name('client.profile');
+    Route::put('/mon-profil', [ClientProfileController::class, 'update'])->name('client.profile.update');
+    Route::put('/mon-profil/mot-de-passe', [ClientProfileController::class, 'updatePassword'])->name('client.profile.password');
 });
 
 // ============================================================

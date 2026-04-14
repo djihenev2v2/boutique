@@ -168,6 +168,20 @@
                         <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Rupture</span>
                         @endif
                     </div>
+
+                    {{-- Bouton favori --}}
+                    @php $isFav = in_array($product->id, $favoriteIds); @endphp
+                    <form method="POST" action="{{ route('favoris.toggle') }}" class="absolute top-2 right-2" onclick="event.stopPropagation(); event.preventDefault(); this.submit();">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <button type="submit"
+                                class="w-7 h-7 rounded-full flex items-center justify-center transition-all duration-150 shadow-sm {{ $isFav ? 'bg-red-500 text-white' : 'bg-white/90 text-[#c4c6d1] hover:text-red-500' }}"
+                                title="{{ $isFav ? 'Retirer des favoris' : 'Ajouter aux favoris' }}">
+                            <svg class="w-3.5 h-3.5" fill="{{ $isFav ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.239-4.5-5-4.5-1.876 0-3.51.93-4.337 2.306a5.84 5.84 0 00-.326.6 5.84 5.84 0 00-.326-.6C10.51 4.68 8.876 3.75 7 3.75c-2.761 0-5 2.015-5 4.5 0 7.22 9.337 12 9.337 12S21 15.47 21 8.25z"/>
+                            </svg>
+                        </button>
+                    </form>
                 </div>
 
                 {{-- Info --}}

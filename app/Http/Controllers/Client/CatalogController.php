@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Favorite;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
@@ -76,7 +77,11 @@ class CatalogController extends Controller
         $attributes = ProductAttribute::with('values')->get()
             ->filter(fn ($a) => $a->values->isNotEmpty());
 
-        return view('client.catalogue', compact('products', 'categories', 'attributes'));
+        $favoriteIds = Favorite::where('user_id', auth()->id())
+            ->pluck('product_id')
+            ->toArray();
+
+        return view('client.catalogue', compact('products', 'categories', 'attributes', 'favoriteIds'));
     }
 
     public function show(string $slug)

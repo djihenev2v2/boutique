@@ -36,13 +36,7 @@
         <nav class="flex-1 overflow-y-auto py-5 px-3 space-y-0.5">
             <p class="px-3 mb-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#747780]">Navigation</p>
 
-            <a href="{{ route('home') }}"
-               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('home') ? 'bg-[#18396e] text-white shadow-lg' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
-                <svg class="w-[18px] h-[18px] flex-shrink-0 {{ request()->routeIs('home') ? 'text-white' : 'text-[#747780] group-hover:text-[#18396e]' }}" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75V19.5a1.5 1.5 0 001.5 1.5h4.5v-5.25a1.5 1.5 0 011.5-1.5h0a1.5 1.5 0 011.5 1.5V21H18a1.5 1.5 0 001.5-1.5V9.75"/>
-                </svg>
-                <span>Accueil</span>
-            </a>
+
 
             <a href="{{ route('catalogue') }}"
                class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('catalogue', 'product.show') ? 'bg-[#002352] text-white shadow-md' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
@@ -53,13 +47,7 @@
                 <span>Catalogue</span>
             </a>
 
-            <a href="#"
-               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]">
-                <svg class="w-[18px] h-[18px] flex-shrink-0 text-[#747780] group-hover:text-[#18396e]" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321 1.02l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.386a.562.562 0 01-.84.61l-4.725-2.885a.562.562 0 00-.586 0l-4.725 2.886a.562.562 0 01-.84-.611l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-1.02l5.518-.442a.563.563 0 00.475-.345l2.125-5.111z"/>
-                </svg>
-                <span>Nouveautés</span>
-            </a>
+
 
             <a href="{{ route('cart.index') }}"
                class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('cart.*', 'checkout*', 'orders.confirmation') ? 'bg-[#002352] text-white shadow-md' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
@@ -81,9 +69,9 @@
                 <span>Mes commandes</span>
             </a>
 
-            <a href="#"
-               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]">
-                <svg class="w-[18px] h-[18px] flex-shrink-0 text-[#747780] group-hover:text-[#18396e]" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <a href="{{ route('favoris.index') }}"
+               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('favoris.*') ? 'bg-[#002352] text-white shadow-md' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
+                <svg class="w-[18px] h-[18px] flex-shrink-0 {{ request()->routeIs('favoris.*') ? 'text-white' : 'text-[#747780] group-hover:text-[#18396e]' }}" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.239-4.5-5-4.5-1.876 0-3.51.93-4.337 2.306a5.84 5.84 0 00-.326.6 5.84 5.84 0 00-.326-.6C10.51 4.68 8.876 3.75 7 3.75c-2.761 0-5 2.015-5 4.5 0 7.22 9.337 12 9.337 12S21 15.47 21 8.25z"/>
                 </svg>
                 <span>Favoris</span>
@@ -91,23 +79,15 @@
 
             <p class="px-3 mt-5 mb-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#747780]">Compte</p>
 
-            <a href="#"
-               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]">
-                <svg class="w-[18px] h-[18px] flex-shrink-0 text-[#747780] group-hover:text-[#18396e]" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 10.5-7.5 10.5S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            <a href="{{ route('client.profile') }}"
+               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('client.profile') ? 'bg-[#002352] text-white shadow-md' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
+                <svg class="w-[18px] h-[18px] flex-shrink-0 {{ request()->routeIs('client.profile') ? 'text-white' : 'text-[#747780] group-hover:text-[#18396e]' }}" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
                 </svg>
-                <span>Mes adresses</span>
+                <span>Mon profil</span>
             </a>
 
-            <a href="#"
-               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]">
-                <svg class="w-[18px] h-[18px] flex-shrink-0 text-[#747780] group-hover:text-[#18396e]" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a3.375 3.375 0 116.75 0c0 1.297-.73 2.423-1.8 2.996-.57.304-.95.907-.95 1.553v.201m-1.875 2.25h.008v.008h-.008v-.008z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3.75A8.25 8.25 0 103.75 12 8.25 8.25 0 0012 3.75z"/>
-                </svg>
-                <span>Support</span>
-            </a>
+
 
             <a href="{{ route('terms') }}"
                class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('terms') ? 'bg-[#002352] text-white shadow-md' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
