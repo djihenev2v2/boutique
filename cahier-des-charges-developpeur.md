@@ -360,7 +360,7 @@ Créer / Modifier un Produit
 
 ---
 
-### 2.7 PAGE : Liste des Catégories
+### 2.7 PAGE : Liste des Catégories ==> done 
 
 **Description** : Gestion des catégories de produits (hiérarchie parent/enfant).
 

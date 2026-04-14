@@ -44,9 +44,9 @@
                 <span>Accueil</span>
             </a>
 
-            <a href="#"
-               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]">
-                <svg class="w-[18px] h-[18px] flex-shrink-0 text-[#747780] group-hover:text-[#18396e]" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
+            <a href="{{ route('catalogue') }}"
+               class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('catalogue', 'product.show') ? 'bg-[#002352] text-white shadow-md' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
+                <svg class="w-[18px] h-[18px] flex-shrink-0 {{ request()->routeIs('catalogue', 'product.show') ? 'text-white' : 'text-[#747780] group-hover:text-[#18396e]' }}" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v10.5A2.25 2.25 0 0118.75 19.5H5.25A2.25 2.25 0 013 17.25V6.75z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.75h18"/>
                 </svg>

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Client\CatalogController;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -43,6 +44,14 @@ Route::middleware(['auth', 'no-cache'])->get('/home', function () {
     }
     return view('client.home');
 })->name('home');
+
+// ============================================================
+// Routes Client (authentifié)
+// ============================================================
+Route::middleware(['auth', 'no-cache'])->group(function () {
+    Route::get('/catalogue', [CatalogController::class, 'index'])->name('catalogue');
+    Route::get('/produit/{slug}', [CatalogController::class, 'show'])->name('product.show');
+});
 
 // ============================================================
 // Routes Admin (authentifié + rôle admin)
