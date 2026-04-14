@@ -53,7 +53,7 @@ Route::middleware(['auth', 'no-cache'])->get('/home', function () {
     if (auth()->user()->isAdmin()) {
         return redirect()->route('admin.dashboard');
     }
-    return view('client.home');
+    return redirect()->route('catalogue');
 })->name('home');
 
 // ============================================================

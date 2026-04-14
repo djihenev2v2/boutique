@@ -56,9 +56,7 @@
                 </svg>
                 <span class="flex-1">Panier</span>
                 @php $cartCount = \App\Http\Controllers\Client\CartController::getCount(); @endphp
-                @if($cartCount > 0)
-                <span class="ml-auto text-[10px] font-bold min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center {{ request()->routeIs('cart.*', 'checkout*', 'orders.confirmation') ? 'bg-white text-[#002352]' : 'bg-[#002352] text-white' }}">{{ $cartCount }}</span>
-                @endif
+                <span data-cart-badge class="ml-auto text-[10px] font-bold min-w-[18px] h-[18px] px-1 rounded-full flex items-center justify-center {{ request()->routeIs('cart.*', 'checkout*', 'orders.confirmation') ? 'bg-white text-[#002352]' : 'bg-[#002352] text-white' }}" style="display:{{ $cartCount > 0 ? 'flex' : 'none' }}">{{ $cartCount }}</span>
             </a>
 
             <a href="{{ route('orders.index') }}"
@@ -153,9 +151,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.837L5.61 7.5m0 0L6.75 13.5h10.69c.55 0 1.02-.374 1.137-.911l1.219-5.625a1.125 1.125 0 00-1.099-1.364H5.61zM6.75 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm10.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
                     </svg>
-                    @if(isset($cartCount) && $cartCount > 0)
-                    <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#002352] text-white text-[9px] font-bold rounded-full flex items-center justify-center">{{ $cartCount > 9 ? '9+' : $cartCount }}</span>
-                    @endif
+                    <span data-cart-badge class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#002352] text-white text-[9px] font-bold rounded-full flex items-center justify-center" style="display:{{ (isset($cartCount) && $cartCount > 0) ? 'flex' : 'none' }}">{{ isset($cartCount) && $cartCount > 9 ? '9+' : ($cartCount ?? 0) }}</span>
                 </a>
 
                 {{-- Notifications --}}
