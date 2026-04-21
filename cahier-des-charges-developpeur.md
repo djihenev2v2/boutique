@@ -1,17 +1,17 @@
-
-# BOUTIQUE EN LIGNE 
+# BOUTIQUE EN LIGNE
 
 ## 1. RÉSUMÉ DES RÔLES UTILISATEURS ==> done ce point
 
-| Rôle                   | Authentification           | 
-| ---------------------- | -------------------------- |
-| **Commerçant (Admin)** | login |
-| **Client (Visiteur)**  | login+signup | 
+| Rôle                   | Authentification                                      |
+| ---------------------- | ----------------------------------------------------- |
+| **Commerçant (Admin)** | Login (email + mot de passe)                          |
+| **Client (Visiteur)**  | **Aucune** — accès libre, sans compte, sans connexion |
+
 ---
 
 ## 2. COMMERÇANT (ADMIN) — PAGES & FONCTIONNALITÉS
 
-### Layout global admin ==> done 
+### Layout global admin ==> done
 
 - **Sidebar gauche** : Menu de navigation permanent
 - **Header top** : Nom du commerçant, bouton déconnexion, lien vers le site public
@@ -150,14 +150,15 @@ Créer / Modifier un Produit
 
 #### Section 1 — Informations générales
 
-| Champ          | Type                               | Validation                          |
-| -------------- | ---------------------------------- | ----------------------------------- |
-| Nom du produit | Input text                         | Required, max 255 caractères        |
-| Description    | Textarea (éditeur riche optionnel) | Nullable                            |
-| Catégorie      | Select dropdown                    | Nullable, liste des catégories      |
-| Marque         | Input text                         | Nullable, max 100 caractères        |
-| Prix de base   | Input number                       | Required, min 0, décimal 2 chiffres |
-| Statut         | Toggle switch                      | Actif / Inactif (défaut : Actif)    |
+| Champ             | Type                               | Validation                                                                             |
+| ----------------- | ---------------------------------- | -------------------------------------------------------------------------------------- |
+| Nom du produit    | Input text                         | Required, max 255 caractères                                                           |
+| Description       | Textarea (éditeur riche optionnel) | Nullable                                                                               |
+| Catégorie         | Select dropdown                    | Nullable, liste des catégories                                                         |
+| Marque            | Input text                         | Nullable, max 100 caractères                                                           |
+| Prix de base      | Input number                       | Required, min 0, décimal 2 chiffres                                                    |
+| Prix promotionnel | Input number                       | Nullable. Si renseigné, doit être < prix de base. Affiche un badge "PROMO" sur le site |
+| Statut            | Toggle switch                      | Actif / Inactif (défaut : Actif)                                                       |
 
 #### Section 2 — Images du produit
 
@@ -226,7 +227,7 @@ Créer / Modifier un Produit
 
 ---
 
-### 2.5 PAGE : Liste des Commandes ==> done 
+### 2.5 PAGE : Liste des Commandes ==> done
 
 **Description** : Affiche toutes les commandes avec filtres et gestion des statuts.
 
@@ -283,7 +284,7 @@ Créer / Modifier un Produit
 
 ---
 
-### 2.6 PAGE : Détail d'une Commande==> done 
+### 2.6 PAGE : Détail d'une Commande==> done
 
 **Description** : Affiche toutes les informations d'une commande avec possibilité de la gérer.
 
@@ -360,7 +361,7 @@ Créer / Modifier un Produit
 
 ---
 
-### 2.7 PAGE : Liste des Catégories ==> done 
+### 2.7 PAGE : Liste des Catégories ==> done
 
 **Description** : Gestion des catégories de produits (hiérarchie parent/enfant).
 
@@ -647,34 +648,73 @@ Créer / Modifier un Produit
 
 ### 3.1 PAGE : Accueil
 
-**Description** : Page vitrine de la boutique.
+**Description** : Page vitrine publique de la boutique. Accessible sans compte ni connexion.
 
 **Contenu de la page** :
 
-#### Header (présent sur toutes les pages)
+#### Header (présent sur toutes les pages client)
 
 - Logo de la boutique (lien vers l'accueil)
 - Menu de navigation : Accueil | Catalogue | Catégories (dropdown)
 - Icône panier avec **badge compteur** (nombre d'articles dans le panier)
+- Lien **Suivre ma commande** → page de suivi
 - Sur mobile : Menu hamburger
 
-#### Section 1 — Bannière promotionnelle
+#### Section 1 — Bannière promotionnelle (Hero)
 
-- Image grande largeur (slider ou image fixe)
-- Texte promotionnel + bouton CTA "Voir les produits"
+- Image grande largeur (slider ou image fixe configurable)
+- Texte promotionnel (titre + sous-titre)
+- Bouton CTA principal : **"Voir les produits"** → redirige vers /catalogue
+- Bouton CTA secondaire (optionnel) : **"Nos promotions"** → ancre vers la section promotions
 
 #### Section 2 — Catégories
 
+- Titre de section : "Nos Catégories"
 - Grille de cards : Image de catégorie | Nom de la catégorie
 - Chaque card filtre le catalogue sur la catégorie sélectionnée
+- Afficher uniquement les catégories ayant au moins 1 produit actif
 
-#### Section 3 — Produits populaires (8 produits)
+#### Section 3 — Produits en Promotion
 
-- Grille de cards produits (4 colonnes desktop, 2 colonnes mobile) :
-    - Image principale du produit
+- Titre de section : "🏷️ Produits en Promotion"
+- Affichage : jusqu'à **8 produits** ayant un `discount_price` défini et inférieur au prix de base (`base_price`)
+- Grille (4 colonnes desktop, 2 colonnes mobile)
+- Card produit promo :
+    - Image principale
+    - Nom du produit
+    - **Prix barré** (prix original) + **Nouveau prix** (prix promo) en rouge/accent
+    - **Badge "PROMO"** (badge rouge en haut à gauche de l'image)
+    - Pourcentage de réduction calculé : ex. **-25%**
+    - Badge "Rupture" si toutes les variantes à stock 0
+- Si aucun produit en promo : la section est **masquée** (ne s'affiche pas)
+- Bouton **"Voir toutes les promotions"** → redirige vers /catalogue?promo=1
+
+#### Section 4 — Nouveaux Produits
+
+- Titre de section : "✨ Nouveaux Arrivages"
+- Affichage : jusqu'à **8 produits** créés dans les **30 derniers jours** (triés du plus récent au plus ancien)
+- Grille (4 colonnes desktop, 2 colonnes mobile)
+- Card produit :
+    - Image principale
     - Nom du produit
     - Prix (à partir de X DA si variantes avec prix différents)
-    - Badge "Rupture de stock" si toutes les variantes sont à stock 0
+    - **Badge "NOUVEAU"** (badge vert/accent en haut à gauche)
+    - Badge "Rupture" si toutes les variantes à stock 0
+    - Si le produit est aussi en promo : afficher le badge "PROMO" à la place de "NOUVEAU"
+- Si aucun produit récent (< 30 jours) : la section est **masquée**
+- Bouton **"Voir tout le catalogue"** → redirige vers /catalogue
+
+#### Section 5 — Produits Populaires
+
+- Titre de section : "⭐ Produits Populaires"
+- Affichage : **8 produits actifs**, triés par nombre de ventes (somme des `order_items.quantity` sur commandes livrées), ou par date de création si pas encore de ventes
+- Grille (4 colonnes desktop, 2 colonnes mobile)
+- Card produit :
+    - Image principale
+    - Nom du produit
+    - Prix (à partir de X DA)
+    - Badge "Rupture de stock" si toutes les variantes à stock 0
+    - Badge "PROMO" si `discount_price` défini
 - Chaque card ouvre la fiche du produit sélectionné
 
 #### Footer (présent sur toutes les pages)
@@ -683,14 +723,19 @@ Créer / Modifier un Produit
 - Téléphone de contact
 - Email
 - Lien vers les conditions de vente
+- Lien vers le suivi de commande
 - "© 2026 — Nom de la boutique"
 
 **Fonctionnalités** :
 | Action | Détail |
 |--------|--------|
-| Cliquer sur une catégorie | Redirige vers le catalogue filtré par cette catégorie |
+| Cliquer sur une catégorie | Redirige vers /catalogue filtré par cette catégorie |
 | Cliquer sur un produit | Redirige vers la page produit |
-| Cliquer sur l'icône panier | Ouvre la page panier |
+| Cliquer sur l'icône panier | Ouvre la page /panier |
+| Cliquer sur "Voir toutes les promotions" | Redirige vers /catalogue?promo=1 |
+| Cliquer sur "Voir tout le catalogue" | Redirige vers /catalogue |
+| Section Promotions dynamique | Masquée si aucun produit en promotion actif |
+| Section Nouveaux Arrivages dynamique | Masquée si aucun produit créé dans les 30 derniers jours |
 
 ---
 
@@ -706,14 +751,16 @@ Créer / Modifier un Produit
 
 #### Filtres (sidebar sur desktop, drawer sur mobile)
 
-| Filtre        | Type                           | Détail                                    |
-| ------------- | ------------------------------ | ----------------------------------------- |
-| Catégorie     | Checkboxes                     | Liste des catégories (multi-sélection)    |
-| Prix          | Range slider ou inputs min/max | Filtre par plage de prix                  |
-| Taille        | Checkboxes                     | S, M, L, XL... (valeurs existantes)       |
-| Couleur       | Boutons couleurs ou checkboxes | Valeurs existantes                        |
-| Pointure      | Checkboxes                     | Valeurs existantes                        |
-| Disponibilité | Checkbox                       | Afficher uniquement les produits en stock |
+| Filtre        | Type                           | Détail                                                              |
+| ------------- | ------------------------------ | ------------------------------------------------------------------- |
+| Catégorie     | Checkboxes                     | Liste des catégories (multi-sélection)                              |
+| Prix          | Range slider ou inputs min/max | Filtre par plage de prix                                            |
+| Taille        | Checkboxes                     | S, M, L, XL... (valeurs existantes)                                 |
+| Couleur       | Boutons couleurs ou checkboxes | Valeurs existantes                                                  |
+| Pointure      | Checkboxes                     | Valeurs existantes                                                  |
+| En promotion  | Checkbox                       | Afficher uniquement les produits en promo (`discount_price` défini) |
+| Nouveautés    | Checkbox                       | Afficher uniquement les produits créés dans les 30 derniers jours   |
+| Disponibilité | Checkbox                       | Afficher uniquement les produits en stock                           |
 
 #### Tri
 
@@ -813,7 +860,7 @@ Pour chaque type d'attribut du produit, afficher un sélecteur :
 
 ---
 
-### 3.4 PAGE : Panier ==> done 
+### 3.4 PAGE : Panier ==> done
 
 **Description** : Récapitulatif des articles avant la commande.
 
@@ -859,7 +906,7 @@ Pour chaque type d'attribut du produit, afficher un sélecteur :
 
 ---
 
-### 3.5 PAGE : Checkout (Passer commande) ==> done 
+### 3.5 PAGE : Checkout (Passer commande) ==> done
 
 **Description** : Formulaire simplifié de commande, optimisé pour le marché algérien.
 
@@ -924,7 +971,7 @@ Pour chaque type d'attribut du produit, afficher un sélecteur :
 
 ---
 
-### 3.6 PAGE : Confirmation de Commande ==> done 
+### 3.6 PAGE : Confirmation de Commande ==> done
 
 **Description** : Page affichée après une commande réussie.
 
@@ -949,7 +996,7 @@ Pour chaque type d'attribut du produit, afficher un sélecteur :
 
 ---
 
-### 3.7 PAGE : Suivi de Commande (optionnel) ==> done 
+### 3.7 PAGE : Suivi de Commande (optionnel) ==> done
 
 **Description** : Le client peut suivre sa commande avec son numéro de téléphone.
 

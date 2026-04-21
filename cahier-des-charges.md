@@ -21,9 +21,11 @@ Développer une boutique en ligne mono-commerçant adaptée au marché algérien
 
 ### 2.2 Client final
 
-- Consulte les produits
-- Passe commande
-- Suit sa livraison
+- Consulte les produits **sans compte ni connexion** (accès public)
+- Passe commande (formulaire simple : nom, téléphone, adresse)
+- Suit sa livraison par numéro de commande + téléphone
+- Peut ajouter des produits au panier (session)
+- Peut voir les promotions et nouveaux arrivages sur la page d'accueil
 
 ---
 
@@ -32,7 +34,7 @@ Développer une boutique en ligne mono-commerçant adaptée au marché algérien
 ### Stack
 
 - **Backend + Frontend** : Laravel (Blade + Livewire )
-- **CSS** : Tailwind CSS cdn 
+- **CSS** : Tailwind CSS cdn
 - **Base de données** : MySQL
 - **Cache** : Redis (recommandé)
 
@@ -127,8 +129,8 @@ Variantes :
 
 - **Paiement à la livraison** (obligatoire, par défaut)
 - Intégration future :
-  - BaridiMob
-  - CIB
+    - BaridiMob
+    - CIB
 
 ---
 
@@ -226,6 +228,7 @@ CREATE TABLE products (
   name VARCHAR(255) NOT NULL,
   description TEXT NULL,
   base_price DECIMAL(10,2) NOT NULL,
+  discount_price DECIMAL(10,2) NULL,  -- Prix promo (NULL = pas de promotion active)
   brand VARCHAR(100) NULL,
   is_active BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP NULL,
@@ -302,8 +305,8 @@ CREATE TABLE variant_attributes (
 **Exemple :**
 
 - Chaussure Nike
-  - Variante 1 → SKU: NIKE-BLK-42 | Noir / 42 | 5500 DA | Stock: 10
-  - Variante 2 → SKU: NIKE-WHT-43 | Blanc / 43 | 5500 DA | Stock: 5
+    - Variante 1 → SKU: NIKE-BLK-42 | Noir / 42 | 5500 DA | Stock: 10
+    - Variante 2 → SKU: NIKE-WHT-43 | Blanc / 43 | 5500 DA | Stock: 5
 
 ### CLIENTS
 
@@ -483,9 +486,9 @@ CREATE TABLE coupons (
 - Nom, Description, Catégorie, Marque, Prix de base
 - Upload images multiples
 - **Section Variantes** (UI dynamique) :
-  - Choix attributs : Taille → S / M / L | Couleur → Noir / Blanc | Pointure → 40 / 41 / 42
-  - Génération automatique des combinaisons
-  - Tableau Stock pa variantes : SKU | Prix | Stock
+    - Choix attributs : Taille → S / M / L | Couleur → Noir / Blanc | Pointure → 40 / 41 / 42
+    - Génération automatique des combinaisons
+    - Tableau Stock pa variantes : SKU | Prix | Stock
 
 #### Page Commandes
 
@@ -579,9 +582,9 @@ Grille de produits avec pagination
 ## 17. SÉCURITÉ
 
 - Authentification Laravel (sessions + CSRF)
-- Hash mot de passe 
+- Hash mot de passe
 - Validation des données (Form Requests)
-- Protection contre XSS et SQL injection 
+- Protection contre XSS et SQL injection
 
 ---
 
