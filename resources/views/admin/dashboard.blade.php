@@ -67,22 +67,22 @@
         </div>
     </div>
 
-    {{-- Total clients --}}
+    {{-- Total commandes --}}
     <div class="bg-white rounded-2xl p-5 shadow-[0px_20px_40px_rgba(24,57,110,0.06)] transition-all duration-200 hover:shadow-[0px_25px_50px_rgba(24,57,110,0.12)] hover:-translate-y-0.5">
         <div class="flex items-start justify-between mb-4">
-            <p class="text-[12px] font-semibold uppercase tracking-widest text-[#5d5f5f]">Clients</p>
+            <p class="text-[12px] font-semibold uppercase tracking-widest text-[#5d5f5f]">Commandes</p>
             <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-indigo-50">
                 <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                 </svg>
             </div>
         </div>
-        <p class="text-[28px] font-bold text-[#002352] leading-none">{{ $totalClients }}</p>
+        <p class="text-[28px] font-bold text-[#002352] leading-none">{{ $totalOrders }}</p>
         <div class="flex items-center gap-1.5 mt-2">
-            <span class="text-[11px] text-[#5d5f5f]">Clients enregistrés</span>
+            <span class="text-[11px] text-[#5d5f5f]">Total des commandes</span>
         </div>
         <div class="mt-4 h-1 w-full bg-[#edeef0] rounded-full overflow-hidden">
-            <div class="h-full bg-indigo-400 rounded-full" style="width:{{ min(100, max(5, $totalClients)) }}%"></div>
+            <div class="h-full bg-indigo-400 rounded-full" style="width:{{ min(100, max(5, $totalOrders)) }}%"></div>
         </div>
     </div>
 

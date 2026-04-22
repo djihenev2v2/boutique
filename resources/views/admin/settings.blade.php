@@ -134,7 +134,7 @@
                 </div>
                 <div class="flex-1">
                     <h2 class="text-[14px] font-semibold text-[#18396e]">Conditions de vente</h2>
-                    <p class="text-xs text-slate-500 mt-0.5">Ce texte sera affiché sur la page <a href="{{ route('terms') }}" target="_blank" class="underline text-[#18396e] hover:opacity-75">Conditions de vente</a> visible par les clients.</p>
+                    <p class="text-xs text-slate-500 mt-0.5">Ce texte sera affiché sur la page Conditions de vente visible par les clients.</p>
                 </div>
             </div>
             <div class="p-6">

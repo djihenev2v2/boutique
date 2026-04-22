@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 class Order extends Model
 {
     protected $fillable = [
-        'order_number', 'user_id',
+        'order_number',
         'customer_name', 'customer_phone', 'customer_email',
         'wilaya_id', 'address',
         'subtotal', 'shipping_cost', 'discount', 'total',
@@ -53,11 +53,6 @@ class Order extends Model
                 $order->order_number = 'CMD-' . strtoupper(Str::random(8));
             }
         });
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 
     public function wilaya(): BelongsTo

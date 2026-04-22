@@ -5,7 +5,7 @@
 -- ============================================================
 
 -- ============================================================
--- TABLE : users (admin + clients)
+-- TABLE : users (admin uniquement)
 -- ============================================================
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -14,10 +14,7 @@ CREATE TABLE `users` (
     `email` VARCHAR(255) NOT NULL,
     `email_verified_at` TIMESTAMP NULL DEFAULT NULL,
     `password` VARCHAR(255) NOT NULL,
-    `role` ENUM('admin', 'client') NOT NULL DEFAULT 'client',
-    `phone` VARCHAR(20) NULL DEFAULT NULL,
-    `address` TEXT NULL DEFAULT NULL,
-    `wilaya_id` INT UNSIGNED NULL DEFAULT NULL,
+    `role` ENUM('admin') NOT NULL DEFAULT 'admin',
     `remember_token` VARCHAR(100) NULL DEFAULT NULL,
     `created_at` TIMESTAMP NULL DEFAULT NULL,
     `updated_at` TIMESTAMP NULL DEFAULT NULL,
@@ -306,7 +303,6 @@ CREATE TABLE `promo_codes` (
 CREATE TABLE `orders` (
     `id`              BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `order_number`    VARCHAR(20) NOT NULL,
-    `user_id`         BIGINT UNSIGNED NULL DEFAULT NULL,
     -- Snapshot client au moment de la commande
     `customer_name`   VARCHAR(255) NOT NULL,
     `customer_phone`  VARCHAR(20) NOT NULL,
@@ -331,13 +327,9 @@ CREATE TABLE `orders` (
     `created_at`     TIMESTAMP NULL DEFAULT NULL,
     `updated_at`     TIMESTAMP NULL DEFAULT NULL,
     UNIQUE KEY `orders_order_number_unique` (`order_number`),
-    KEY `orders_user_id_index` (`user_id`),
     KEY `orders_wilaya_id_index` (`wilaya_id`),
     KEY `orders_status_index` (`status`),
     KEY `orders_created_at_index` (`created_at`),
-    CONSTRAINT `orders_user_id_foreign`
-        FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-        ON DELETE SET NULL,
     CONSTRAINT `orders_wilaya_id_foreign`
         FOREIGN KEY (`wilaya_id`) REFERENCES `wilayas` (`id`),
     CONSTRAINT `orders_promo_code_id_foreign`
@@ -390,46 +382,7 @@ CREATE TABLE `shipments` (
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- TABLE : carts (panier persistant par utilisateur)
--- ============================================================
-DROP TABLE IF EXISTS `cart_items`;
-DROP TABLE IF EXISTS `carts`;
-
-CREATE TABLE `carts` (
-    `id`            BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `user_id`       BIGINT UNSIGNED NOT NULL,
-    `promo_code_id` INT UNSIGNED NULL DEFAULT NULL,
-    `created_at`    TIMESTAMP NULL DEFAULT NULL,
-    `updated_at`    TIMESTAMP NULL DEFAULT NULL,
-    UNIQUE KEY `carts_user_id_unique` (`user_id`),
-    CONSTRAINT `carts_user_id_foreign`
-        FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-        ON DELETE CASCADE,
-    CONSTRAINT `carts_promo_code_id_foreign`
-        FOREIGN KEY (`promo_code_id`) REFERENCES `promo_codes` (`id`)
-        ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================================
--- TABLE : cart_items
--- ============================================================
-CREATE TABLE `cart_items` (
-    `id`                 BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `cart_id`            BIGINT UNSIGNED NOT NULL,
-    `product_variant_id` BIGINT UNSIGNED NOT NULL,
-    `quantity`           INT UNSIGNED NOT NULL DEFAULT 1,
-    `created_at`         TIMESTAMP NULL DEFAULT NULL,
-    `updated_at`         TIMESTAMP NULL DEFAULT NULL,
-    UNIQUE KEY `cart_items_cart_variant_unique` (`cart_id`, `product_variant_id`),
-    KEY `cart_items_variant_id_index` (`product_variant_id`),
-    CONSTRAINT `cart_items_cart_id_foreign`
-        FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`)
-        ON DELETE CASCADE,
-    CONSTRAINT `cart_items_variant_id_foreign`
-        FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`)
-        ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- [Tables carts et cart_items supprimées — l'espace client sera refait à zéro]
 
 -- ============================================================
 -- TABLE : settings (paramètres de la boutique)
@@ -471,18 +424,5 @@ CREATE TABLE `order_status_history` (
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- TABLE : favorites
--- ============================================================
-DROP TABLE IF EXISTS `favorites`;
-CREATE TABLE `favorites` (
-    `id`         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `user_id`    BIGINT UNSIGNED NOT NULL,
-    `product_id` BIGINT UNSIGNED NOT NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `favorites_user_product_unique` (`user_id`, `product_id`),
-    CONSTRAINT `fk_fav_user`    FOREIGN KEY (`user_id`)    REFERENCES `users`    (`id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_fav_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- [Table favorites supprimée — l'espace client sera refait à zéro]
 

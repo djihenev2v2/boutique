@@ -13,7 +13,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'admin' => \App\Http\Middleware\IsAdmin::class,
-            'client' => \App\Http\Middleware\IsClient::class,
             'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
             'no-cache' => \App\Http\Middleware\NoCacheHeaders::class,
         ]);

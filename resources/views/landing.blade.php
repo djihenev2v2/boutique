@@ -35,16 +35,7 @@
                 </div>
                 <span class="text-[#18396e] font-bold text-[17px] tracking-tight">{{ config('app.name', 'Boutique') }}</span>
             </div>
-            <div class="flex items-center gap-3">
-                <a href="{{ route('login') }}"
-                   class="px-5 py-2 text-[13px] font-semibold text-[#18396e] border border-[#d1d8e8] rounded-full hover:bg-[#f2f4f6] transition-colors">
-                    Se connecter
-                </a>
-                <a href="{{ route('register') }}"
-                   class="px-5 py-2 text-[13px] font-semibold text-white bg-[#002352] rounded-full hover:bg-[#18396e] shadow-md shadow-[#002352]/25 transition-all">
-                    Créer un compte
-                </a>
-            </div>
+            <div></div>
         </div>
     </nav>
 
@@ -77,25 +68,7 @@
 
                 <p class="fade-up-delay-2 text-white/65 text-[15px] leading-relaxed mb-8 max-w-md">
                     Des produits soigneusement sélectionnés, livrés partout en Algérie.
-                    Créez votre compte et commencez votre shopping dès maintenant.
                 </p>
-
-                <div class="fade-up-delay-3 flex flex-col sm:flex-row gap-3">
-                    <a href="{{ route('register') }}"
-                       class="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[14px] font-bold text-[#002352] bg-white rounded-full shadow-xl shadow-white/20 hover:shadow-2xl hover:scale-[1.02] transition-all duration-200">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                        </svg>
-                        Créer mon compte
-                    </a>
-                    <a href="{{ route('login') }}"
-                       class="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-[14px] font-semibold text-white border border-white/30 rounded-full hover:bg-white/10 transition-all duration-200">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>
-                        </svg>
-                        Se connecter
-                    </a>
-                </div>
 
                 {{-- Trust badges --}}
                 <div class="fade-up-delay-3 flex flex-wrap gap-5 mt-10">
@@ -199,7 +172,7 @@
                 ['icon' => 'M2.25 3h1.386c.51 0 .955.343 1.087.837L5.61 7.5m0 0L6.75 13.5h10.69c.55 0 1.02-.374 1.137-.911l1.219-5.625a1.125 1.125 0 00-1.099-1.364H5.61zM6.75 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm10.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z', 'title' => 'Commande facile', 'desc' => 'Ajoutez vos articles au panier et passez commande en quelques clics', 'color' => 'bg-blue-50 text-blue-600'],
                 ['icon' => 'M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12', 'title' => 'Livraison 58 wilayas', 'desc' => 'Livraison disponible dans toutes les wilayas d\'Algérie à domicile', 'color' => 'bg-violet-50 text-violet-600'],
                 ['icon' => 'M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z', 'title' => 'Paiement flexible', 'desc' => 'Paiement à la livraison (COD), BaridiMob ou CIB selon votre préférence', 'color' => 'bg-emerald-50 text-emerald-600'],
-                ['icon' => 'M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z', 'title' => 'Suivi de commande', 'desc' => 'Suivez le statut de vos commandes en temps réel depuis votre espace client', 'color' => 'bg-amber-50 text-amber-600'],
+                ['icon' => 'M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z', 'title' => 'Suivi de commande', 'desc' => 'Suivez le statut de vos commandes en temps réel grâce à des notifications claires', 'color' => 'bg-amber-50 text-amber-600'],
             ] as $feat)
             <div class="card-hover bg-white rounded-2xl p-6 shadow-[0px_4px_20px_rgba(24,57,110,0.06)]">
                 <div class="w-11 h-11 rounded-2xl flex items-center justify-center mb-4 {{ $feat['color'] }}">
@@ -211,27 +184,6 @@
                 <p class="text-[#747780] text-[12px] leading-relaxed">{{ $feat['desc'] }}</p>
             </div>
             @endforeach
-        </div>
-    </section>
-
-    {{-- ── CTA SECTION ───────────────────────────────────────── --}}
-    <section class="max-w-6xl mx-auto px-6 pb-20">
-        <div class="hero-gradient rounded-3xl p-12 text-center relative overflow-hidden">
-            <div class="absolute inset-0" style="background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 36px 36px;"></div>
-            <div class="relative z-10">
-                <h2 class="text-2xl font-extrabold text-white mb-3">Prêt à commencer ?</h2>
-                <p class="text-white/60 text-[14px] mb-8 max-w-sm mx-auto">Créez votre compte gratuitement et explorez notre catalogue dès aujourd'hui.</p>
-                <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <a href="{{ route('register') }}"
-                       class="inline-flex items-center justify-center gap-2 px-8 py-3.5 text-[14px] font-bold text-[#002352] bg-white rounded-full shadow-lg hover:scale-[1.02] transition-all">
-                        Créer mon compte gratuit
-                    </a>
-                    <a href="{{ route('login') }}"
-                       class="inline-flex items-center justify-center gap-2 px-8 py-3.5 text-[14px] font-semibold text-white border border-white/30 rounded-full hover:bg-white/10 transition-all">
-                        J'ai déjà un compte
-                    </a>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -247,7 +199,6 @@
                 <span class="text-[#18396e] font-bold text-[14px]">{{ config('app.name', 'Boutique') }}</span>
             </div>
             <div class="flex items-center gap-6 text-[12px] text-[#747780]">
-                <a href="{{ route('terms') }}" class="hover:text-[#18396e] transition-colors">Conditions de vente</a>
                 <span>© {{ date('Y') }} — {{ config('app.name', 'Boutique') }}</span>
             </div>
         </div>

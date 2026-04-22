@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductVariant;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -18,7 +17,7 @@ class DashboardController extends Controller
 
         $todayOrders = Order::whereDate('created_at', today())->count();
 
-        $totalClients = User::where('role', 'client')->count();
+        $totalOrders = Order::count();
 
         $outOfStock = ProductVariant::where('stock', 0)->count();
 
@@ -61,7 +60,7 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact(
             'revenue',
             'todayOrders',
-            'totalClients',
+            'totalOrders',
             'outOfStock',
             'recentOrders',
             'topProducts',

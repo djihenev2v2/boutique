@@ -88,14 +88,6 @@
         </button>
     </form>
 
-    <div class="mt-7 pt-6 border-t border-[#edeef0] text-center">
-        <p class="text-[13px] text-[#5d5f5f] mb-3">Pas encore de compte marchand ?</p>
-        <a href="{{ route('register') }}" class="inline-block px-6 py-2.5 rounded-full bg-[#e7e8ea] border border-transparent text-[13px] font-semibold text-[#27467b] hover:bg-[#e1e2e4] transition-colors">
-            S'inscrire
-        </a>
-    </div>
-</div>
-
 @push('scripts')
 <script type="module" src="{{ asset('js/auth.js') }}"></script>
 @endpush

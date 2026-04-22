@@ -70,10 +70,7 @@
                     </div>
                 </div>
 
-                {{-- Footer --}}
-                <div class="px-7 pb-6 text-center">
-                    <p class="text-[11px] text-[#747780] uppercase tracking-widest">© {{ date('Y') }} {{ config('app.name', 'Boutique') }} • Digital Ecosystem V4.2</p>
-                </div>
+              
             </div>
         </div>
     </div>

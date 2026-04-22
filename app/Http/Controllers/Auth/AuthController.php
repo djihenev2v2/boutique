@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -30,41 +27,16 @@ class AuthController extends Controller
                 return redirect()->intended(route('admin.dashboard'));
             }
 
-            return redirect()->intended(route('home'));
+            Auth::logout();
+
+            return back()->withErrors([
+                'email' => 'Accès réservé aux administrateurs.',
+            ])->onlyInput('email');
         }
 
         return back()->withErrors([
             'email' => 'Les identifiants fournis ne correspondent pas.',
         ])->onlyInput('email');
-    }
-
-    public function showRegister()
-    {
-        return view('auth.register');
-    }
-
-    public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'max:20'],
-            'password' => ['required', 'confirmed', Password::min(8)],
-        ]);
-
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
-            'password' => $validated['password'],
-            'role' => 'client',
-        ]);
-
-        Auth::login($user);
-
-        $request->session()->regenerate();
-
-        return redirect()->route('home');
     }
 
     public function logout(Request $request)
