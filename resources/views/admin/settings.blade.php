@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@use(Illuminate\Support\Facades\Storage)
+
 @section('title', 'Paramètres')
 
 @section('content')
@@ -21,7 +23,7 @@
     </div>
     @endif
 
-    <form method="POST" action="{{ route('admin.settings.update') }}">
+    <form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -64,6 +66,46 @@
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wide">Adresse</label>
                     <input type="text" name="shop_address" value="{{ old('shop_address', $settings['shop_address']) }}"
                            class="w-full border border-[#dde1ea] rounded-xl px-4 py-2.5 text-[13px] text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#18396e]/30 focus:border-[#18396e]">
+                </div>
+
+                {{-- Logo --}}
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold text-slate-600 mb-2 uppercase tracking-wide">Logo de la boutique</label>
+                    <div class="flex flex-col sm:flex-row items-start gap-5 p-4 bg-slate-50 border border-[#dde1ea] rounded-2xl">
+                        {{-- Aperçu logo actuel --}}
+                        <div class="flex-shrink-0">
+                            @if(!empty($settings['shop_logo']))
+                                <img src="{{ Storage::url($settings['shop_logo']) }}"
+                                     id="logoPreview"
+                                     alt="Logo actuel"
+                                     class="h-20 w-auto max-w-[140px] object-contain rounded-xl border border-[#dde1ea] bg-white p-2 shadow-sm">
+                            @else
+                                <div id="logoPreviewEmpty" class="h-20 w-20 rounded-xl border-2 border-dashed border-[#dde1ea] bg-white flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+                                    </svg>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <label for="logoInput" class="inline-flex items-center gap-2 cursor-pointer px-4 py-2 bg-white border border-[#dde1ea] rounded-xl text-[13px] font-medium text-slate-700 hover:bg-slate-100 transition shadow-sm">
+                                <svg class="w-4 h-4 text-[#18396e]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+                                </svg>
+                                Choisir un logo
+                            </label>
+                            <input type="file" name="logo" id="logoInput" accept="image/jpeg,image/png,image/jpg,image/gif,image/webp" class="sr-only"
+                                   onchange="previewLogo(this)">
+                            <p class="text-xs text-slate-400 mt-2">JPG, PNG, GIF ou WEBP — max 2 Mo.</p>
+                            @error('logo')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                            @if(!empty($settings['shop_logo']))
+                            <label class="flex items-center gap-2 mt-3 cursor-pointer select-none">
+                                <input type="checkbox" name="remove_logo" id="remove_logo" class="w-4 h-4 rounded border-slate-300 text-red-500 focus:ring-red-400">
+                                <span class="text-xs text-red-500 font-medium">Supprimer le logo actuel</span>
+                            </label>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -160,4 +202,27 @@
 
     </form>
 </div>
+
+@push('scripts')
+<script>
+function previewLogo(input) {
+    if (!input.files || !input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        // Replace or show the preview image
+        let preview = document.getElementById('logoPreview');
+        let empty   = document.getElementById('logoPreviewEmpty');
+        if (!preview) {
+            preview = document.createElement('img');
+            preview.id = 'logoPreview';
+            preview.alt = 'Aperçu';
+            preview.className = 'h-20 w-auto max-w-[140px] object-contain rounded-xl border border-[#dde1ea] bg-white p-2 shadow-sm';
+            if (empty) { empty.replaceWith(preview); }
+        }
+        preview.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+</script>
+@endpush
 @endsection

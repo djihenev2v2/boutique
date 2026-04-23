@@ -75,7 +75,6 @@ class OrderController extends Controller
             'shipment',
             'statusHistory',
             'promoCode',
-            'user',
         ]);
 
         return view('admin.orders.show', compact('order'));

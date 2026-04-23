@@ -81,6 +81,7 @@ CREATE TABLE `categories` (
     `id`         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `name`       VARCHAR(255) NOT NULL,
     `slug`       VARCHAR(255) NOT NULL,
+    `icon`       VARCHAR(50) NULL DEFAULT NULL COMMENT 'Clé d''icône catégorie (ex: shirt, dress, shoe, bag…)',
     `parent_id`  INT UNSIGNED NULL DEFAULT NULL,
     `created_at` TIMESTAMP NULL DEFAULT NULL,
     `updated_at` TIMESTAMP NULL DEFAULT NULL,
@@ -90,6 +91,9 @@ CREATE TABLE `categories` (
         FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`)
         ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ALTER pour base existante : ajouter la colonne icon
+-- ALTER TABLE `categories` ADD COLUMN `icon` VARCHAR(50) NULL DEFAULT NULL AFTER `slug`;
 
 -- ============================================================
 -- TABLE : products
@@ -397,6 +401,19 @@ CREATE TABLE `settings` (
     `updated_at` TIMESTAMP NULL DEFAULT NULL,
     UNIQUE KEY `settings_key_unique` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- SEED : paramètres boutique par défaut
+INSERT INTO `settings` (`key`, `value`, `created_at`, `updated_at`) VALUES
+('shop_name',  'Ma Boutique', NOW(), NOW()),
+('shop_phone', '', NOW(), NOW()),
+('shop_email', '', NOW(), NOW()),
+('shop_address','', NOW(), NOW()),
+('shop_logo',  NULL, NOW(), NOW()),
+('cod_enabled','1', NOW(), NOW()),
+('baridimob_enabled','0', NOW(), NOW()),
+('cib_enabled','0', NOW(), NOW()),
+('terms',      '', NOW(), NOW())
+ON DUPLICATE KEY UPDATE `key`=`key`;
 
 INSERT INTO `settings` (`key`, `value`) VALUES
     ('terms',              NULL),

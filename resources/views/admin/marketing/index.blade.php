@@ -1,7 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Marketing')
-@section('page-title', 'Marketing')
-@section('page-description', 'Codes promotionnels')
+@section('title', 'Codes Promo')
+@section('page-title', 'Codes Promo')
+@section('page-description', 'Codes promotionnels &amp; réductions')
 
 @section('content')
 <div class="space-y-6">
@@ -10,7 +10,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center gap-4">
         <div class="flex-1">
             <h2 class="text-xl font-bold text-[#18396e]">Codes promotionnels</h2>
-            <p class="text-sm text-slate-500 mt-0.5">{{ $promos->total() }} code{{ $promos->total() !== 1 ? 's' : '' }} au total</p>
+            <p class="text-sm text-slate-500 mt-0.5">{{ $promos->total() }} code{{ $promos->total() !== 1 ? 's' : '' }} &bull; Gérez vos remises et offres spéciales</p>
         </div>
         <div class="flex items-center gap-3">
             {{-- Search --}}

@@ -1,5 +1,74 @@
 @extends('layouts.admin')
 
+@php
+$iconMap = [
+    'shirt' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>',
+        'label' => 'Haut / T-Shirt'
+    ],
+    'dress' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6M9 2l-4.5 7 3 1v12h9V10l3-1L15 2"/><path d="M9 2c.6 1.8 1.6 3 3 3s2.4-1.2 3-3"/></svg>',
+        'label' => 'Robe'
+    ],
+    'pants' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h16l1 9H3L4 3z"/><path d="M4 12l1.5 9H10V12m4 0v9h4.5L20 12"/></svg>',
+        'label' => 'Pantalon'
+    ],
+    'shoe' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h14c1.7 0 3-1.3 3-3v-1.5c1.7-.3 3-1.2 3-2.5s-1.3-2-3-2H13V5.5C13 4.1 11.9 3 10.5 3h-2C7.1 3 6 4.1 6 5.5V9H4C2.9 9 2 9.9 2 11v7z"/></svg>',
+        'label' => 'Chaussure'
+    ],
+    'sneaker' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17c0-1.5 1.3-2.5 3-2.5h4.5L11 9h2.5l.5 2.5 4 .5c1.7 0 3.5.8 3.5 2.5v1.5c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2v-1z"/><path d="M6 14.5l.5-2.5M10 14.5l.5-2.5"/></svg>',
+        'label' => 'Basket'
+    ],
+    'bag' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/></svg>',
+        'label' => 'Sac'
+    ],
+    'jacket' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 5.5V19h4.5v-7H12v7h7.5V5.5L15 2l-1.5 3a1.5 1.5 0 01-3 0L9 2z"/><path d="M9 2L7 8m8-6l2 6"/></svg>',
+        'label' => 'Veste'
+    ],
+    'hat' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3C7.5 3 4 5.7 4 9c0 1.2.5 2.3 1.4 3.2L6.5 14H18l.8-1.8c.9-.9 1.7-2 1.7-3.2C20.5 5.7 16.5 3 12 3z"/><path d="M2 16h20v1.5C22 19 21 20 20 20H4c-1 0-2-1-2-2.5V16z"/></svg>',
+        'label' => 'Chapeau'
+    ],
+    'watch' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"/><path d="M12 9v3l2 2M9 3.5h6M9 20.5h6"/></svg>',
+        'label' => 'Montre'
+    ],
+    'jewelry' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9l4-6zm0 0l4 6m6-6l-4 6M2 9h20M6 9l6 13M18 9l-6 13"/></svg>',
+        'label' => 'Bijoux'
+    ],
+    'sunglasses' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="3.5"/><circle cx="17" cy="12" r="3.5"/><path d="M10.5 12h3M3 11L1.5 9M21 11l1.5-2"/></svg>',
+        'label' => 'Lunettes'
+    ],
+    'kids' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.5 3.6-6 8-6s8 2.5 8 6"/><path d="M18.5 3l.7 2-1.7-.8.8 1.8L16.5 5l.8 1.7-1.7-.7.7 2" opacity="0.65"/></svg>',
+        'label' => 'Enfant'
+    ],
+    'sport' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13.5H11L9 22l9.5-12H12.5L13 2z"/></svg>',
+        'label' => 'Sport'
+    ],
+    'accessories' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/><circle cx="6.25" cy="6.25" r="1" fill="currentColor" stroke="none"/></svg>',
+        'label' => 'Accessoires'
+    ],
+    'perfume' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="9" width="10" height="12" rx="2"/><path d="M10 9V7c0-1 .9-1.5 2-1.5S14 6 14 7v2"/><path d="M10 5.5h-.5C8.7 5.5 8 5 8 4.2V4c0-.9.7-1.5 1.5-1.5H11"/><path d="M14 5.5h.5c.8 0 1.5-.5 1.5-1.3V4c0-.9-.7-1.5-1.5-1.5H13"/><path d="M10 13h4M10 16h4"/></svg>',
+        'label' => 'Parfum'
+    ],
+    'folder' => [
+        'svg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>',
+        'label' => 'Général'
+    ],
+];
+@endphp
+
 @section('title', 'Catégories')
 @section('page-title', 'Catégories')
 @section('page-description', 'Gérez les catégories et sous-catégories de votre boutique')
@@ -57,7 +126,12 @@
                         </svg>
                     </span>
                     <div class="flex-1 min-w-0">
-                        <p class="text-[13px] font-semibold text-[#002352]">{{ $cat->name }}</p>
+                        <p class="text-[13px] font-semibold text-[#002352] flex items-center gap-2">
+                            @if($cat->icon && isset($iconMap[$cat->icon]))
+                                <span class="w-4 h-4 flex-shrink-0 text-[#002352]">{!! $iconMap[$cat->icon]['svg'] !!}</span>
+                            @endif
+                            {{ $cat->name }}
+                        </p>
                         @if($cat->parent)
                         <p class="text-[11px] text-[#747780]">Sous-catégorie de : {{ $cat->parent->name }}</p>
                         @endif
@@ -66,7 +140,7 @@
                         {{ $cat->products->count() }} produit(s)
                     </span>
                     <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button onclick="openEdit({{ $cat->id }}, '{{ addslashes($cat->name) }}', '{{ $cat->parent_id ?? '' }}')"
+                        <button onclick="openEdit({{ $cat->id }}, '{{ addslashes($cat->name) }}', '{{ $cat->parent_id ?? '' }}', '{{ $cat->icon ?? '' }}')"
                                 class="w-8 h-8 flex items-center justify-center rounded-lg text-[#747780] hover:bg-[#002352] hover:text-white transition-all">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
@@ -108,7 +182,12 @@
                             </svg>
                         </span>
                         <div class="flex-1 min-w-0">
-                            <p class="text-[13px] font-bold text-[#002352]">{{ $parent->name }}</p>
+                            <p class="text-[13px] font-bold text-[#002352] flex items-center gap-2">
+                                @if($parent->icon && isset($iconMap[$parent->icon]))
+                                    <span class="w-4 h-4 flex-shrink-0 text-[#002352]">{!! $iconMap[$parent->icon]['svg'] !!}</span>
+                                @endif
+                                {{ $parent->name }}
+                            </p>
                             @if($parent->children->isNotEmpty())
                             <p class="text-[11px] text-[#747780]">{{ $parent->children->count() }} sous-catégorie(s)</p>
                             @endif
@@ -117,7 +196,7 @@
                             {{ $parent->products->count() }} produit(s)
                         </span>
                         <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onclick="openEdit({{ $parent->id }}, '{{ addslashes($parent->name) }}', '')"
+                            <button onclick="openEdit({{ $parent->id }}, '{{ addslashes($parent->name) }}', '', '{{ $parent->icon ?? '' }}')"
                                     class="w-8 h-8 flex items-center justify-center rounded-lg text-[#747780] hover:bg-[#002352] hover:text-white transition-all">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
@@ -143,13 +222,18 @@
                                 </svg>
                             </span>
                             <div class="flex-1 min-w-0">
-                                <p class="text-[13px] font-medium text-[#002352]">{{ $child->name }}</p>
+                                <p class="text-[13px] font-medium text-[#002352] flex items-center gap-2">
+                                    @if($child->icon && isset($iconMap[$child->icon]))
+                                        <span class="w-4 h-4 flex-shrink-0 text-[#002352]">{!! $iconMap[$child->icon]['svg'] !!}</span>
+                                    @endif
+                                    {{ $child->name }}
+                                </p>
                             </div>
                             <span class="text-[11px] text-[#747780] bg-[#f2f4f6] px-2.5 py-1 rounded-lg font-medium">
                                 {{ $child->products->count() }} produit(s)
                             </span>
                             <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button onclick="openEdit({{ $child->id }}, '{{ addslashes($child->name) }}', '{{ $child->parent_id }}')"
+                                <button onclick="openEdit({{ $child->id }}, '{{ addslashes($child->name) }}', '{{ $child->parent_id }}', '{{ $child->icon ?? '' }}')"
                                         class="w-8 h-8 flex items-center justify-center rounded-lg text-[#747780] hover:bg-[#002352] hover:text-white transition-all">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
@@ -212,6 +296,25 @@
                     @endforeach
                 </select>
             </div>
+            {{-- Icon picker --}}
+            <div>
+                <label class="block text-[11px] font-semibold text-[#747780] uppercase tracking-widest mb-2">Icône <span class="font-normal text-[#9ca3af] normal-case tracking-normal">(auto-suggérée selon le nom)</span></label>
+                <input type="hidden" name="icon" id="addIconVal" value="">
+                <div class="grid grid-cols-5 gap-1.5 p-3 bg-[#f2f4f6] rounded-xl max-h-52 overflow-y-auto">
+                    <button type="button" data-icon-prefix="add" data-icon-key="" onclick="selectIcon('add','')"
+                            class="flex flex-col items-center gap-1 p-2 rounded-xl text-[#9ca3af] hover:bg-white hover:text-[#374151] transition-all text-[18px] leading-none">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                        <span class="text-[9px]">Aucune</span>
+                    </button>
+                    @foreach($iconMap as $key => $ic)
+                    <button type="button" data-icon-prefix="add" data-icon-key="{{ $key }}" onclick="selectIcon('add','{{ $key }}')"
+                            class="flex flex-col items-center gap-1 p-2 rounded-xl hover:bg-white hover:shadow-sm transition-all group" title="{{ $ic['label'] }}">
+                        <span class="w-6 h-6 flex items-center justify-center text-[#002352] group-hover:scale-110 transition-transform">{!! $ic['svg'] !!}</span>
+                        <span class="text-[8.5px] text-[#747780] truncate w-full text-center leading-tight">{{ $ic['label'] }}</span>
+                    </button>
+                    @endforeach
+                </div>
+            </div>
             <div class="flex gap-3 pt-2">
                 <button type="button" onclick="closeModal('modalAdd')"
                         class="flex-1 bg-[#f2f4f6] text-[#5d5f5f] text-[13px] font-semibold py-2.5 rounded-xl hover:bg-[#edeef0] transition-colors">
@@ -254,6 +357,25 @@
                     <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                     @endforeach
                 </select>
+            </div>
+            {{-- Icon picker --}}
+            <div>
+                <label class="block text-[11px] font-semibold text-[#747780] uppercase tracking-widest mb-2">Icône</label>
+                <input type="hidden" name="icon" id="editIconVal" value="">
+                <div class="grid grid-cols-5 gap-1.5 p-3 bg-[#f2f4f6] rounded-xl max-h-52 overflow-y-auto">
+                    <button type="button" data-icon-prefix="edit" data-icon-key="" onclick="selectIcon('edit','')"
+                            class="flex flex-col items-center gap-1 p-2 rounded-xl text-[#9ca3af] hover:bg-white hover:text-[#374151] transition-all">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                        <span class="text-[9px]">Aucune</span>
+                    </button>
+                    @foreach($iconMap as $key => $ic)
+                    <button type="button" data-icon-prefix="edit" data-icon-key="{{ $key }}" onclick="selectIcon('edit','{{ $key }}')"
+                            class="flex flex-col items-center gap-1 p-2 rounded-xl hover:bg-white hover:shadow-sm transition-all group" title="{{ $ic['label'] }}">
+                        <span class="w-6 h-6 flex items-center justify-center text-[#002352] group-hover:scale-110 transition-transform">{!! $ic['svg'] !!}</span>
+                        <span class="text-[8.5px] text-[#747780] truncate w-full text-center leading-tight">{{ $ic['label'] }}</span>
+                    </button>
+                    @endforeach
+                </div>
             </div>
             <div class="flex gap-3 pt-2">
                 <button type="button" onclick="closeModal('modalEdit')"

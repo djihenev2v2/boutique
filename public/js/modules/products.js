@@ -3,6 +3,42 @@
  */
 
 // ─────────────────────────────────────────────
+// PREDEFINED COLOR LIST
+// ─────────────────────────────────────────────
+const PREDEFINED_COLORS = [
+    { label: 'Blanc',      css: '#FFFFFF' },
+    { label: 'Noir',       css: '#111111' },
+    { label: 'Rouge',      css: '#DC2626' },
+    { label: 'Bleu',       css: '#2563EB' },
+    { label: 'Vert',       css: '#16A34A' },
+    { label: 'Jaune',      css: '#EAB308' },
+    { label: 'Orange',     css: '#EA580C' },
+    { label: 'Rose',       css: '#EC4899' },
+    { label: 'Violet',     css: '#9333EA' },
+    { label: 'Gris',       css: '#6B7280' },
+    { label: 'Marron',     css: '#92400E' },
+    { label: 'Beige',      css: '#D4B483' },
+    { label: 'Turquoise',  css: '#0D9488' },
+    { label: 'Corail',     css: '#F87171' },
+    { label: 'Bordeaux',   css: '#881337' },
+    { label: 'Marine',     css: '#1E3A5F' },
+    { label: 'Kaki',       css: '#78716C' },
+    { label: 'Or',         css: '#CA8A04' },
+    { label: 'Argent',     css: '#9CA3AF' },
+    { label: 'Crème',      css: '#FEF9EE' },
+    { label: 'Lavande',    css: '#C4B5FD' },
+    { label: 'Mint',       css: '#6EE7B7' },
+    { label: 'Chocolat',   css: '#6B3F1F' },
+    { label: 'Pêche',      css: '#FDBA74' },
+    { label: 'Écru',       css: '#F5F0E1' },
+    { label: 'Caramel',    css: '#D97706' },
+    { label: 'Lilas',      css: '#A78BFA' },
+    { label: 'Saumon',     css: '#FCA5A5' },
+    { label: 'Indigo',     css: '#4338CA' },
+    { label: 'Cyan',       css: '#0891B2' },
+];
+
+// ─────────────────────────────────────────────
 // INDEX PAGE — Delete confirm + Toggle active
 // ─────────────────────────────────────────────
 
@@ -115,7 +151,14 @@ function initFormPage() {
             .replace(/"/g, '&quot;');
     }
 
-    // ── Tag rendering ─────────────────────────────────
+    // ── Color attribute detection ─────────────────────
+    function isColorAttr(name) {
+        const n = name.toLowerCase();
+        return n.includes('couleur') || n.includes('color');
+    }
+
+    // ── Tag rendering (non-color attributes) ─────────
+
     function renderTags(attr) {
         const row = document.getElementById(`tag-row-${attr.id}`);
         if (!row) return;
@@ -141,7 +184,116 @@ function initFormPage() {
         document.getElementById(`attr-input-${attr.id}`)?.focus();
     }
 
+    // ── Build COLOR attribute section (autocomplete) ─
+    function buildColorAttrSection(attr) {
+        const section = document.createElement('div');
+        section.id = `attr-section-${attr.id}`;
+        section.className = 'bg-[#f8f9fb] border border-[#edeef0] rounded-xl p-3 space-y-2';
+
+        const lbl = document.createElement('p');
+        lbl.className = 'text-[11px] font-bold uppercase tracking-widest text-[#747780]';
+        lbl.textContent = `Valeurs — ${attr.name}`;
+        section.appendChild(lbl);
+
+        const tagRow = document.createElement('div');
+        tagRow.id = `tag-row-${attr.id}`;
+        tagRow.className = 'flex flex-wrap gap-2 min-h-[28px]';
+        section.appendChild(tagRow);
+
+        const inputWrapper = document.createElement('div');
+        inputWrapper.className = 'relative';
+
+        const textInput = document.createElement('input');
+        textInput.type = 'text';
+        textInput.id = `attr-input-${attr.id}`;
+        textInput.placeholder = 'Tapez pour chercher une couleur…';
+        textInput.autocomplete = 'off';
+        textInput.className = 'w-full text-[12.5px] text-[#191c1e] bg-white border border-[#e1e2e4] rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#002352]/20 transition-colors';
+
+        const dropdown = document.createElement('div');
+        dropdown.id = `attr-dropdown-${attr.id}`;
+        dropdown.className = 'hidden absolute z-50 top-full left-0 right-0 bg-white border border-[#e1e2e4] rounded-xl shadow-lg overflow-hidden mt-1';
+        dropdown.style.maxHeight = '220px';
+        dropdown.style.overflowY = 'auto';
+
+        function renderColorTags() {
+            tagRow.innerHTML = '';
+            attr.values.forEach(colorName => {
+                const colorObj = PREDEFINED_COLORS.find(c => c.label.toLowerCase() === colorName.toLowerCase());
+                const css = colorObj ? colorObj.css : '#9CA3AF';
+
+                const tag = document.createElement('div');
+                tag.className = 'inline-flex items-center gap-1.5 pl-1.5 pr-2 py-0.5 rounded-full border border-[#e1e2e4] bg-white text-[12px] font-semibold text-[#374151] select-none';
+                tag.innerHTML = `
+                    <span style="width:18px;height:18px;border-radius:50%;background:${escHtml(css)};border:1.5px solid rgba(0,0,0,0.12);display:inline-block;flex-shrink:0"></span>
+                    <span>${escHtml(colorName)}</span>
+                    <button type="button" class="ml-0.5 text-[#c4c6d1] hover:text-red-500 transition-colors text-[15px] leading-none">&times;</button>
+                `;
+                tag.querySelector('button').addEventListener('click', () => {
+                    attr.values = attr.values.filter(v => v !== colorName);
+                    renderColorTags();
+                });
+                tagRow.appendChild(tag);
+            });
+        }
+
+        function addColorValue(colorObj) {
+            if (attr.values.includes(colorObj.label)) return;
+            attr.values.push(colorObj.label);
+            renderColorTags();
+            textInput.value = '';
+            dropdown.classList.add('hidden');
+            dropdown.innerHTML = '';
+        }
+
+        function showDropdown(query) {
+            const q = (query || '').toLowerCase();
+            const filtered = q
+                ? PREDEFINED_COLORS.filter(c => c.label.toLowerCase().startsWith(q) || c.label.toLowerCase().includes(q))
+                : PREDEFINED_COLORS;
+            const available = filtered.filter(c => !attr.values.includes(c.label));
+
+            if (available.length === 0) { dropdown.classList.add('hidden'); return; }
+
+            dropdown.innerHTML = '';
+            available.forEach(colorObj => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center gap-2.5 px-3 py-2 hover:bg-[#f2f4f6] cursor-pointer transition-colors';
+                item.innerHTML = `
+                    <span style="width:22px;height:22px;border-radius:50%;background:${escHtml(colorObj.css)};border:1.5px solid rgba(0,0,0,0.12);flex-shrink:0;display:inline-block;box-shadow:0 1px 3px rgba(0,0,0,.12)"></span>
+                    <span class="text-[13px] font-medium text-[#374151]">${escHtml(colorObj.label)}</span>
+                `;
+                item.addEventListener('mousedown', e => { e.preventDefault(); addColorValue(colorObj); });
+                dropdown.appendChild(item);
+            });
+            dropdown.classList.remove('hidden');
+        }
+
+        textInput.addEventListener('focus', () => showDropdown(textInput.value));
+        textInput.addEventListener('input', () => showDropdown(textInput.value));
+        textInput.addEventListener('blur', () => { setTimeout(() => dropdown.classList.add('hidden'), 160); });
+        textInput.addEventListener('keydown', e => {
+            if (e.key === 'Escape') dropdown.classList.add('hidden');
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const first = PREDEFINED_COLORS.find(c =>
+                    c.label.toLowerCase().startsWith(textInput.value.toLowerCase())
+                    && !attr.values.includes(c.label)
+                );
+                if (first) addColorValue(first);
+            }
+        });
+
+        inputWrapper.appendChild(textInput);
+        inputWrapper.appendChild(dropdown);
+        section.appendChild(inputWrapper);
+        attrValueSections.appendChild(section);
+
+        if (attr.values.length) renderColorTags();
+    }
+
     // ── Build attribute section (free-text tag input) ─
+
     function buildAttrSection(attr) {
         const section = document.createElement('div');
         section.id = `attr-section-${attr.id}`;
@@ -197,7 +349,11 @@ function initFormPage() {
                     : [];
                 const attr = { id: attrId, name: attrName, values: [...preVals] };
                 selectedAttributes.push(attr);
-                buildAttrSection(attr);
+                if (isColorAttr(attrName)) {
+                    buildColorAttrSection(attr);
+                } else {
+                    buildAttrSection(attr);
+                }
             } else {
                 selectedAttributes = selectedAttributes.filter(a => a.id !== attrId);
                 document.getElementById(`attr-section-${attrId}`)?.remove();

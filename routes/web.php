@@ -8,6 +8,12 @@ use App\Http\Controllers\Admin\PromoCodeController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\WilayaController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Client\CatalogueController;
+use App\Http\Controllers\Client\CartController;
+use App\Http\Controllers\Client\CheckoutController;
+use App\Http\Controllers\Client\LandingController;
+use App\Http\Controllers\Client\OrderTrackingController;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 
 // ============================================================
@@ -17,8 +23,59 @@ Route::get('/', function () {
     if (auth()->check() && auth()->user()->isAdmin()) {
         return redirect()->route('admin.dashboard');
     }
-    return view('landing');
+    return app(LandingController::class)->index();
 })->name('landing');
+
+// ============================================================
+// Routes Client publiques
+// ============================================================
+Route::get('/catalogue',        [CatalogueController::class, 'index'])->name('catalogue');
+Route::get('/produit/{slug}',   [CatalogueController::class, 'show'])->name('product.show');
+
+// Panier
+Route::get('/panier',           [CartController::class, 'index'])->name('cart.index');
+Route::post('/panier/ajouter',  [CartController::class, 'add'])->name('cart.add');
+Route::patch('/panier/{variantId}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/panier/{variantId}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/panier/vider',    [CartController::class, 'clear'])->name('cart.clear');
+
+// Checkout
+Route::get('/checkout',                        [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout',                       [CheckoutController::class, 'store'])->name('checkout.store');
+Route::post('/checkout/promo',                 [CheckoutController::class, 'applyPromo'])->name('checkout.promo');
+Route::get('/checkout/wilaya/{wilayaId}',      [CheckoutController::class, 'wilayaShipping'])->name('checkout.wilaya');
+Route::get('/confirmation/{orderNumber}',      [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
+
+// Suivi de commande
+Route::get('/suivi',  [OrderTrackingController::class, 'index'])->name('order.tracking');
+Route::post('/suivi', [OrderTrackingController::class, 'search'])->name('order.tracking.search');
+Route::get('/suivi-commande', fn () => redirect()->route('order.tracking', [], 301));
+
+// Codes promo (client)
+Route::get('/code-promo', function () {
+    $shopName   = Setting::get('shop_name', config('app.name'));
+    $logoPath   = Setting::get('shop_logo');
+    $cartCount  = \App\Http\Controllers\Client\CartController::getCount();
+    $promoCodes = \App\Models\PromoCode::where('is_active', true)
+        ->where(function ($q) {
+            $q->whereNull('expires_at')->orWhere('expires_at', '>=', now());
+        })
+        ->where(function ($q) {
+            $q->whereNull('max_uses')->orWhereColumn('used_count', '<', 'max_uses');
+        })
+        ->orderByDesc('created_at')
+        ->get();
+    return view('client.promo', compact('shopName', 'logoPath', 'promoCodes', 'cartCount'));
+})->name('client.promo');
+
+// Conditions Générales de Vente
+Route::get('/conditions-de-vente', function () {
+    $shopName  = Setting::get('shop_name', config('app.name'));
+    $logoPath  = Setting::get('shop_logo');
+    $cartCount = CartController::getCount();
+    $content   = Setting::get('shop_cgv', '');
+    return view('client.cgv', compact('shopName', 'logoPath', 'cartCount', 'content'));
+})->name('cgv');
 
 // ============================================================
 // Admin login (guest uniquement)

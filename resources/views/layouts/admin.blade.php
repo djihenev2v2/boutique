@@ -1,10 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@php
+    $adminShopName = \App\Models\Setting::get('shop_name', config('app.name', 'Boutique'));
+    $adminLogoPath = \App\Models\Setting::get('shop_logo');
+@endphp
+<!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Dashboard') — {{ config('app.name', 'Boutique') }}</title>
+    <title>@yield('title', 'Dashboard') — {{ $adminShopName }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="{{ asset('js/tailwind.config.js') }}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,13 +25,15 @@
 
         {{-- Brand --}}
         <div class="h-[68px] flex items-center gap-3 px-5 border-b border-[#edeef0]">
-            <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 bg-[#002352] shadow-md shadow-[#002352]/20">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72"/>
-                </svg>
-            </div>
-            <div>
-                <p class="text-[#18396e] font-bold text-[15px] leading-tight tracking-tight">{{ config('app.name', 'Boutique') }}</p>
+            @include('partials.shop-logo', [
+                'logoPath' => $adminLogoPath,
+                'shopName' => $adminShopName,
+                'containerClass' => 'w-9 h-9 rounded-xl overflow-hidden flex-shrink-0 bg-[#002352] flex items-center justify-center shadow-md shadow-[#002352]/20',
+                'imageClass' => 'w-full h-full object-contain p-1',
+                'iconClass' => 'w-5 h-5 text-white',
+            ])
+            <div class="min-w-0">
+                <p class="text-[#18396e] font-bold text-[15px] leading-tight tracking-tight truncate">{{ $adminShopName }}</p>
                 <p class="text-slate-400 text-[10px] font-medium uppercase tracking-widest">Management Suite</p>
             </div>
         </div>
@@ -83,14 +89,14 @@
                 <span>Livraison</span>
             </a>
 
-            {{-- Marketing --}}
+            {{-- Codes Promo --}}
             <a href="{{ route('admin.marketing.index') }}"
                class="group flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all duration-150 {{ request()->routeIs('admin.marketing*') ? 'bg-[#18396e] text-white shadow-lg' : 'text-[#5d5f5f] hover:bg-[#f2f4f6] hover:text-[#18396e]' }}">
                 <svg class="w-[18px] h-[18px] flex-shrink-0 {{ request()->routeIs('admin.marketing*') ? 'text-white' : 'text-[#747780] group-hover:text-[#18396e]' }}" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 14.25l6-6m4.5-3.493V21.75l-4.125-2.25-3.375 1.5-3.375-1.5-4.125 2.25V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.016h-.008V9.75zm5.625 4.5c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.016h-.008v-.016z"/>
                 </svg>
-                <span>Marketing</span>
+                <span>Codes Promo</span>
             </a>
 
             {{-- Paramètres --}}

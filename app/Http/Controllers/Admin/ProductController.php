@@ -88,7 +88,8 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
             'brand'       => 'nullable|string|max:100',
-            'base_price'  => 'required|numeric|min:0',
+            'base_price'    => 'required|numeric|min:0',
+            'discount_price' => 'nullable|numeric|min:0',
             'is_active'   => 'boolean',
             'images.*'    => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'variants'    => 'nullable|array',
@@ -113,8 +114,9 @@ class ProductController extends Controller
                 'description' => $validated['description'] ?? null,
                 'category_id' => $validated['category_id'] ?? null,
                 'brand'       => $validated['brand'] ?? null,
-                'base_price'  => $validated['base_price'],
-                'is_active'   => $request->boolean('is_active', true),
+                'base_price'     => $validated['base_price'],
+                'discount_price'  => $validated['discount_price'] ?? null,
+                'is_active'      => $request->boolean('is_active', true),
             ]);
 
             // Images
@@ -178,7 +180,8 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
             'brand'       => 'nullable|string|max:100',
-            'base_price'  => 'required|numeric|min:0',
+            'base_price'    => 'required|numeric|min:0',
+            'discount_price' => 'nullable|numeric|min:0',
             'is_active'   => 'boolean',
             'images.*'    => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'delete_images' => 'nullable|array',
@@ -198,8 +201,9 @@ class ProductController extends Controller
                 'description' => $validated['description'] ?? null,
                 'category_id' => $validated['category_id'] ?? null,
                 'brand'       => $validated['brand'] ?? null,
-                'base_price'  => $validated['base_price'],
-                'is_active'   => $request->boolean('is_active', true),
+                'base_price'     => $validated['base_price'],
+                'discount_price'  => $validated['discount_price'] ?? null,
+                'is_active'      => $request->boolean('is_active', true),
             ]);
 
             // Delete selected images

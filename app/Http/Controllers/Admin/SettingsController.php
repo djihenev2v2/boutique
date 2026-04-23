@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
@@ -15,6 +16,7 @@ class SettingsController extends Controller
             'shop_phone'        => Setting::get('shop_phone', ''),
             'shop_email'        => Setting::get('shop_email', ''),
             'shop_address'      => Setting::get('shop_address', ''),
+            'shop_logo'         => Setting::get('shop_logo', ''),
             'cod_enabled'       => Setting::get('cod_enabled', '1'),
             'baridimob_enabled' => Setting::get('baridimob_enabled', '0'),
             'cib_enabled'       => Setting::get('cib_enabled', '0'),
@@ -31,6 +33,7 @@ class SettingsController extends Controller
             'shop_phone'   => 'nullable|string|max:30',
             'shop_email'   => 'nullable|email|max:255',
             'shop_address' => 'nullable|string|max:500',
+            'logo'         => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'terms'        => 'nullable|string',
         ]);
 
@@ -42,6 +45,25 @@ class SettingsController extends Controller
         Setting::set('baridimob_enabled', $request->has('baridimob_enabled') ? '1' : '0');
         Setting::set('cib_enabled',       $request->has('cib_enabled')       ? '1' : '0');
         Setting::set('terms',             $request->input('terms', ''));
+
+        // Supprimer le logo si la case est cochée
+        if ($request->has('remove_logo')) {
+            $old = Setting::get('shop_logo');
+            if ($old && Storage::disk('public')->exists($old)) {
+                Storage::disk('public')->delete($old);
+            }
+            Setting::set('shop_logo', null);
+        }
+
+        // Nouveau logo uploadé
+        if ($request->hasFile('logo')) {
+            $old = Setting::get('shop_logo');
+            if ($old && Storage::disk('public')->exists($old)) {
+                Storage::disk('public')->delete($old);
+            }
+            $path = $request->file('logo')->store('logos', 'public');
+            Setting::set('shop_logo', $path);
+        }
 
         return redirect()->route('admin.settings')->with('success', 'Paramètres enregistrés avec succès.');
     }

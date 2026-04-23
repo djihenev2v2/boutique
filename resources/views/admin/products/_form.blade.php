@@ -221,6 +221,22 @@
                 </div>
                 @error('base_price')<p class="text-[11px] text-red-500 mt-1">{{ $message }}</p>@enderror
 
+                {{-- Discount Price --}}
+                <div class="mt-4">
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-[#616363] mb-1.5">Prix promo / discount (DA) <span class="text-[10px] font-normal text-[#9ca3af] normal-case tracking-normal">— optionnel</span></label>
+                    <div class="relative flex items-stretch bg-[#f2f4f6] rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-rose-400/30 focus-within:bg-white transition-colors">
+                        <span class="flex items-center px-3 text-[11px] font-bold text-white bg-rose-500 whitespace-nowrap flex-shrink-0">PROMO</span>
+                        <input type="number" name="discount_price" value="{{ old('discount_price', $product->discount_price ?? '') }}"
+                               min="0" step="1" placeholder="0"
+                               class="flex-1 min-w-0 text-[19px] font-bold text-rose-600 bg-transparent border-none outline-none px-4 py-2.5"/>
+                        <span class="flex items-center px-3 text-[12px] font-bold text-[#747780] border-l border-[#e1e2e4] whitespace-nowrap">DZD</span>
+                    </div>
+                    <p class="text-[10.5px] text-[#9ca3af] mt-1.5 flex items-center gap-1">
+                        <svg class="w-3 h-3 text-rose-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/><circle cx="6" cy="6" r="1" fill="currentColor"/></svg>
+                        Si renseigné, ce prix barré sera affiché sur la fiche produit.
+                    </p>
+                </div>
+
                 <div class="mt-3 flex items-start gap-2 bg-[#f2f4f6] rounded-xl p-3">
                     <svg class="w-4 h-4 text-[#27467b] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/>

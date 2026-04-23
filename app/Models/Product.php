@@ -11,12 +11,13 @@ class Product extends Model
 {
     protected $fillable = [
         'name', 'slug', 'description', 'category_id',
-        'brand', 'base_price', 'is_active',
+        'brand', 'base_price', 'discount_price', 'is_active',
     ];
 
     protected $casts = [
-        'base_price' => 'decimal:2',
-        'is_active'  => 'boolean',
+        'base_price'     => 'decimal:2',
+        'discount_price' => 'decimal:2',
+        'is_active'      => 'boolean',
     ];
 
     protected static function boot(): void

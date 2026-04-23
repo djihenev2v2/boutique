@@ -39,6 +39,7 @@ class CategoryController extends Controller
         $data = $request->validate([
             'name'      => ['required', 'string', 'max:255', Rule::unique('categories', 'name')],
             'parent_id' => ['nullable', 'exists:categories,id'],
+            'icon'      => ['nullable', 'string', 'max:50'],
         ]);
 
         $data['slug'] = Str::slug($data['name']);
@@ -53,14 +54,17 @@ class CategoryController extends Controller
         $data = $request->validate([
             'name'      => ['required', 'string', 'max:255', Rule::unique('categories', 'name')->ignore($category->id)],
             'parent_id' => ['nullable', 'exists:categories,id'],
+            'icon'      => ['nullable', 'string', 'max:50'],
         ]);
 
         // Prevent a category from being its own parent or creating a loop
-        if ($data['parent_id'] && (int)$data['parent_id'] === $category->id) {
+        if (!empty($data['parent_id']) && (int)$data['parent_id'] === $category->id) {
             return back()->withErrors(['parent_id' => 'Une catégorie ne peut pas être son propre parent.']);
         }
 
         $data['slug'] = Str::slug($data['name']);
+        // Allow clearing icon
+        $data['icon'] = $request->input('icon') ?: null;
 
         $category->update($data);
 

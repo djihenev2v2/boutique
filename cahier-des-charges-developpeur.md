@@ -704,18 +704,6 @@ Créer / Modifier un Produit
 - Si aucun produit récent (< 30 jours) : la section est **masquée**
 - Bouton **"Voir tout le catalogue"** → redirige vers /catalogue
 
-#### Section 5 — Produits Populaires
-
-- Titre de section : "⭐ Produits Populaires"
-- Affichage : **8 produits actifs**, triés par nombre de ventes (somme des `order_items.quantity` sur commandes livrées), ou par date de création si pas encore de ventes
-- Grille (4 colonnes desktop, 2 colonnes mobile)
-- Card produit :
-    - Image principale
-    - Nom du produit
-    - Prix (à partir de X DA)
-    - Badge "Rupture de stock" si toutes les variantes à stock 0
-    - Badge "PROMO" si `discount_price` défini
-- Chaque card ouvre la fiche du produit sélectionné
 
 #### Footer (présent sur toutes les pages)
 
@@ -747,8 +735,7 @@ Créer / Modifier un Produit
 
 #### Barre de recherche
 
-- Champ **Recherche** par nom de produit (Livewire, temps réel)
-
+- Cham
 #### Filtres (sidebar sur desktop, drawer sur mobile)
 
 | Filtre        | Type                           | Détail                                                              |
@@ -1025,18 +1012,6 @@ Pour chaque type d'attribut du produit, afficher un sélecteur :
 |--------|--------|
 | Rechercher | Cherche dans `orders` par numéro de commande + téléphone du client associé |
 | Afficher le suivi | Montre le statut actuel et la progression |
-
----
-
-### 3.8 PAGE : Conditions de Vente
-
-**Description** : Affiche les conditions de vente rédigées par le commerçant.
-
-**Contenu de la page** :
-
-- Titre "Conditions de vente"
-- Contenu texte depuis la table `settings` (champ `terms`)
-- Si vide : "Aucune condition de vente n'a été définie."
 
 ---
 
